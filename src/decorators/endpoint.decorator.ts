@@ -1,4 +1,3 @@
-import 'reflect-metadata'
 import type { EndpointDecoratorMetadata, DefaultMetadataProperties } from '../interfaces'
 
 export const ApiDocsEndpoint = <P extends DefaultMetadataProperties>(metadata: EndpointDecoratorMetadata<P>): MethodDecorator => {
