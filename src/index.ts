@@ -1,3 +1,5 @@
+import 'reflect-metadata'
+
 export interface TestInterface {
   name: string
   value: number
