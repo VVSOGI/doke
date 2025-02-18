@@ -5,8 +5,11 @@ import { DEFAULT_CONFIG, ERROR_MESSAGES } from '../constants'
 export class FileManager {
   private readonly basePath: string
 
-  constructor(outputPath: string) {
-    this.basePath = path.isAbsolute(outputPath) ? outputPath : path.join(process.cwd(), outputPath)
+  constructor(inputPath: string) {
+    if (!inputPath) {
+      throw new Error(ERROR_MESSAGES.INVALID_PATH)
+    }
+    this.basePath = path.isAbsolute(inputPath) ? inputPath : path.join(process.cwd(), inputPath)
   }
 
   async existsDirectory(dirPath: string): Promise<boolean> {
@@ -28,20 +31,10 @@ export class FileManager {
     }
   }
 
-  async saveJson(filePath: string, data: unknown): Promise<void> {
-    if (!filePath) {
-      throw new Error(ERROR_MESSAGES.INVALID_PATH)
-    }
-
-    const dirPath = path.dirname(filePath)
-    const isExist = await this.existsDirectory(dirPath)
-    if (!isExist) {
-      await this.createDirectory(dirPath)
-    }
-
-    const fullPath = path.join(this.basePath, filePath)
+  async saveJson(name: string, data: unknown): Promise<void> {
+    const fullPath = path.join(this.basePath, name, DEFAULT_CONFIG.EXTENSION)
     try {
-      await fs.writeFile(fullPath, JSON.stringify(data, null, DEFAULT_CONFIG.JSON_INDENT), DEFAULT_CONFIG.ENCODINGS)
+      await fs.writeFile(fullPath, JSON.stringify(data, null, DEFAULT_CONFIG.JSON_INDENT))
     } catch (error) {
       throw new Error(`${ERROR_MESSAGES.FILE_WRITE_FAILED}: ${error.message}`)
     }
