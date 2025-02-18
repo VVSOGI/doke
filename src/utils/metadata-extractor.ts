@@ -37,7 +37,7 @@ export class MetadataExtractor {
       description: metadata.description,
       deprecated: metadata.deprecated,
       tags: metadata.tags,
-      request: Object.keys(request).length > 0 ? request : undefined,
+      request,
       response: metadata.response
     }
   }

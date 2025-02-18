@@ -8,12 +8,13 @@ export interface ApiEndpoint {
   deprecated?: boolean
   tags?: string[]
   request?: ApiRequest
-  response: ApiResponse
+  response?: ApiResponse
 }
 
 export interface ApiEndpointMetadata {
   description: string
-  response: ApiResponse
+  request?: ApiRequest
+  response?: ApiResponse
   requestExample?: any
   responseExample?: any
   deprecated?: boolean
