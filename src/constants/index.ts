@@ -4,7 +4,8 @@ export const DEFAULT_CONFIG = {
   DESCRIPTION: 'Generated API documentation by doke',
   ENCODINGS: 'utf-8',
   OUTPUT_PATH: 'api-docs',
-  JSON_INDENT: 2
+  JSON_INDENT: 2,
+  ROUTES: 'routes'
 } as const
 
 export * from './metadata.keys'
