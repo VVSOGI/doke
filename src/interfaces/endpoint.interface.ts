@@ -13,6 +13,7 @@ export interface ApiEndpoint {
 
 export interface ApiEndpointMetadata {
   description: string
+  response: ApiResponse
   requestExample?: any
   responseExample?: any
   deprecated?: boolean
