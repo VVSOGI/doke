@@ -1,3 +1,5 @@
+import { METADATA_KEYS } from 'src/constants'
+
 interface ApiDocsControllerMetadata {
   description?: string
   tags?: string[]
@@ -5,7 +7,7 @@ interface ApiDocsControllerMetadata {
 
 export const ApiDocsController = (metadata: ApiDocsControllerMetadata): ClassDecorator => {
   return (target: any) => {
-    Reflect.defineMetadata('api:controller', metadata, target)
+    Reflect.defineMetadata(METADATA_KEYS.CONTROLLER, metadata, target)
     return target
   }
 }

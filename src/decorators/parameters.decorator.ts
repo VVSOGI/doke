@@ -1,3 +1,5 @@
+import { METADATA_KEYS } from 'src/constants'
+
 interface ApiDocsParameterMetadata {
   type: string
   properties: Record<string, any>
@@ -13,6 +15,6 @@ const createParameterDecorator = (metadataKey: string) => {
   }
 }
 
-export const ApiDocsBody = createParameterDecorator('api:body')
-export const ApiDocsQuery = createParameterDecorator('api:query')
-export const ApiDocsParam = createParameterDecorator('api:param')
+export const ApiDocsBody = createParameterDecorator(METADATA_KEYS.BODY)
+export const ApiDocsQuery = createParameterDecorator(METADATA_KEYS.QUERY)
+export const ApiDocsParam = createParameterDecorator(METADATA_KEYS.PARAM)
