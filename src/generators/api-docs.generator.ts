@@ -1,8 +1,8 @@
-import { INestApplication } from '@nestjs/common'
+import type { ApiController } from '../interfaces'
+import { DiscoveryService } from '@nestjs/core'
 import { MetadataExtractor } from '../utils/metadata-extractor'
 import { FileManager } from '../utils/file-manager'
 import { ERROR_MESSAGES } from '../constants'
-import type { ApiController } from '../interfaces'
 
 interface ProjectMetadata {
   name: string
@@ -22,55 +22,78 @@ export class ApiDocsGenerator {
     this.fileManager = new FileManager(outputPath, targetFolder)
   }
 
-  async generateDocs(app: INestApplication<any>, Test: any) {
-    const discoveryService = app.get(Test)
+  async generateDocs(discoveryService: DiscoveryService): Promise<void> {
+    this.validateDiscoveryService(discoveryService)
+    const data = await this.getControllersInfo(discoveryService)
+    this.storeControllersInfo(data)
+    await this.saveDocumentation()
+  }
+
+  private validateDiscoveryService(discoveryService: DiscoveryService): void {
     if (!discoveryService) {
       throw new Error(ERROR_MESSAGES.NO_DISCOVERY_SERVICE)
     }
-
-    const controllers = discoveryService.getControllers()
-
-    for (const wrapper of controllers) {
-      if (!wrapper.instance || !wrapper.metatype) continue
-
-      const prototype = Object.getPrototypeOf(wrapper.instance)
-      const controllerPath = MetadataExtractor.extractControllerPath(wrapper.metatype)
-      if (!controllerPath) continue
-
-      const controllerMetadata = MetadataExtractor.extractControllerMetadata(wrapper.metatype)
-      const methodNames = MetadataExtractor.extractMethodNames(prototype)
-
-      // console.log(methodNames.map((methodName) => MetadataExtractor.extractEndpointMetadata(prototype, methodName)))
-
-      const endpoints = methodNames
-        .map((methodName) => MetadataExtractor.extractEndpointMetadata(prototype, methodName))
-        .filter((endpoint): endpoint is NonNullable<typeof endpoint> => endpoint !== null)
-
-      if (endpoints.length === 0) continue
-
-      this.projectMetadata.routes.push(controllerPath)
-
-      this.docs.push({
-        controllerName: wrapper.metatype.name,
-        basePath: controllerPath,
-        description: controllerMetadata?.description,
-        tags: controllerMetadata?.tags,
-        endpoints
-      })
-    }
-
-    await this.fileManager.createDirectoryStructure()
-    await this.saveProjectMetadata()
-    await this.saveRouteDocs()
   }
 
-  private async saveProjectMetadata() {
+  private storeControllersInfo(data: ApiController[]) {
+    for (const info of data) {
+      this.projectMetadata.routes.push(info.basePath)
+      this.docs.push(info)
+    }
+  }
+
+  private extractControllerInfo(wrapper: { instance: any; metatype: any }): ApiController | null {
+    if (!this.isValidWrapper(wrapper)) return null
+
+    const prototype = Object.getPrototypeOf(wrapper.instance)
+    const controllerPath = MetadataExtractor.extractControllerPath(wrapper.metatype)
+    if (!controllerPath) return null
+
+    const endpoints = this.extractEndpoints(prototype)
+    if (endpoints.length === 0) return null
+
+    const controllerMetadata = MetadataExtractor.extractControllerMetadata(wrapper.metatype)
+
+    return {
+      controllerName: wrapper.metatype.name,
+      basePath: controllerPath,
+      description: controllerMetadata?.description,
+      tags: controllerMetadata?.tags,
+      endpoints
+    }
+  }
+
+  private isValidWrapper(wrapper: { instance: any; metatype: any }): boolean {
+    return !!(wrapper.instance && wrapper.metatype)
+  }
+
+  private extractEndpoints(prototype: any): ApiController['endpoints'] {
+    const methodNames = MetadataExtractor.extractMethodNames(prototype)
+    return methodNames
+      .map((methodName) => MetadataExtractor.extractEndpointMetadata(prototype, methodName))
+      .filter((endpoint): endpoint is NonNullable<typeof endpoint> => endpoint !== null)
+  }
+
+  private async getControllersInfo(discoveryService: DiscoveryService) {
+    const controllers = discoveryService.getControllers()
+    const extractions: ApiController[] = []
+    for (const wrapper of controllers) {
+      const controllerInfo = this.extractControllerInfo(wrapper)
+      if (controllerInfo) extractions.push(controllerInfo)
+    }
+    return extractions
+  }
+
+  private async saveDocumentation(): Promise<void> {
+    await this.fileManager.createDirectoryStructure()
+    await Promise.all([this.saveProjectMetadata(), this.saveRouteDocs()])
+  }
+
+  private async saveProjectMetadata(): Promise<void> {
     await this.fileManager.saveJson('projects', this.projectMetadata)
   }
 
-  private async saveRouteDocs() {
-    for (const doc of this.docs) {
-      await this.fileManager.saveJson(`routes/${doc.basePath}`, doc)
-    }
+  private async saveRouteDocs(): Promise<void> {
+    await Promise.all(this.docs.map((doc) => this.fileManager.saveJson(`routes/${doc.basePath}`, doc)))
   }
 }
