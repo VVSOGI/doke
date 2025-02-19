@@ -5,11 +5,12 @@ import { DEFAULT_CONFIG, ERROR_MESSAGES } from '../constants'
 export class FileManager {
   private readonly basePath: string
 
-  constructor(inputPath: string) {
+  constructor(inputPath: string, targetFolder: string = 'api-docs') {
     if (!inputPath) {
       throw new Error(ERROR_MESSAGES.INVALID_PATH)
     }
     this.basePath = path.isAbsolute(inputPath) ? inputPath : path.join(process.cwd(), inputPath)
+    this.basePath += targetFolder
   }
 
   async existsDirectory(dirPath: string): Promise<boolean> {
@@ -32,7 +33,7 @@ export class FileManager {
   }
 
   async saveJson(name: string, data: unknown): Promise<void> {
-    const fullPath = path.join(this.basePath, name, DEFAULT_CONFIG.EXTENSION)
+    const fullPath = path.join(this.basePath, name + DEFAULT_CONFIG.EXTENSION)
     try {
       await fs.writeFile(fullPath, JSON.stringify(data, null, DEFAULT_CONFIG.JSON_INDENT))
     } catch (error) {

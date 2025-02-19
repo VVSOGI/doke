@@ -1,9 +1,8 @@
 import { INestApplication } from '@nestjs/common'
-import { DiscoveryService } from '@nestjs/core'
-import { MetadataExtractor } from 'src/utils/metadata-extractor'
-import { FileManager } from 'src/utils/file-manager'
-import { ERROR_MESSAGES } from 'src/constants'
-import type { ApiController } from 'src/interfaces'
+import { MetadataExtractor } from '../utils/metadata-extractor'
+import { FileManager } from '../utils/file-manager'
+import { ERROR_MESSAGES } from '../constants'
+import type { ApiController } from '../interfaces'
 
 interface ProjectMetadata {
   name: string
@@ -17,14 +16,14 @@ export class ApiDocsGenerator {
   private readonly projectMetadata: ProjectMetadata
   private readonly fileManager: FileManager
 
-  constructor(metadata: Omit<ProjectMetadata, 'routes'>, outputPath: string) {
+  constructor(metadata: Omit<ProjectMetadata, 'routes'>, outputPath: string, targetFolder?: string) {
     this.docs = []
     this.projectMetadata = { ...metadata, routes: [] }
-    this.fileManager = new FileManager(outputPath)
+    this.fileManager = new FileManager(outputPath, targetFolder)
   }
 
-  async generateDocs(app: INestApplication) {
-    const discoveryService = app.get(DiscoveryService)
+  async generateDocs(app: INestApplication<any>, Test: any) {
+    const discoveryService = app.get(Test)
     if (!discoveryService) {
       throw new Error(ERROR_MESSAGES.NO_DISCOVERY_SERVICE)
     }
@@ -40,6 +39,8 @@ export class ApiDocsGenerator {
 
       const controllerMetadata = MetadataExtractor.extractControllerMetadata(wrapper.metatype)
       const methodNames = MetadataExtractor.extractMethodNames(prototype)
+
+      // console.log(methodNames.map((methodName) => MetadataExtractor.extractEndpointMetadata(prototype, methodName)))
 
       const endpoints = methodNames
         .map((methodName) => MetadataExtractor.extractEndpointMetadata(prototype, methodName))

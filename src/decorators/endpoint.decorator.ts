@@ -1,4 +1,4 @@
-import { METADATA_KEYS } from 'src/constants'
+import { METADATA_KEYS } from '../constants'
 import type { EndpointDecoratorMetadata, DefaultMetadataProperties } from '../interfaces'
 
 export const ApiDocsEndpoint = <P extends DefaultMetadataProperties>(metadata: EndpointDecoratorMetadata<P>): MethodDecorator => {

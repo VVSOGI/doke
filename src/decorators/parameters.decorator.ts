@@ -1,4 +1,4 @@
-import { METADATA_KEYS } from 'src/constants'
+import { METADATA_KEYS } from '../constants'
 
 interface ApiDocsParameterMetadata {
   type: string
