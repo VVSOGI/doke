@@ -12,21 +12,15 @@ export class MetadataExtractor {
     }
   }
 
-  static extractControllerPath(controller: any): string | null {
+  static extractControllerPath(controller: any): string {
     return Reflect.getMetadata(METADATA_KEYS.PATH, controller)
   }
 
   static extractEndpointMetadata(prototype: any, methodName: string): ApiEndpoint | null {
     const metadata: ApiEndpointMetadata = Reflect.getMetadata(METADATA_KEYS.ENDPOINT, prototype, methodName)
-    if (!metadata) return null
-
     const path = Reflect.getMetadata(METADATA_KEYS.PATH, prototype[methodName])
     const methodValue = Reflect.getMetadata(METADATA_KEYS.METHOD, prototype[methodName])
-
-    if (!path || methodValue === undefined) return null
-
     const method = this.convertMethodValueToString(methodValue)
-    if (!method) return null
 
     return {
       path,
@@ -40,7 +34,7 @@ export class MetadataExtractor {
     return Object.getOwnPropertyNames(prototype).filter((prop) => prop !== 'constructor' && typeof prototype[prop] === 'function')
   }
 
-  private static convertMethodValueToString(methodValue: number): HttpMethod | null {
+  private static convertMethodValueToString(methodValue: number): HttpMethod {
     const methodMap: Record<number, HttpMethod> = {
       0: 'GET',
       1: 'POST',
@@ -52,6 +46,6 @@ export class MetadataExtractor {
       7: 'HEAD'
     }
 
-    return methodMap[methodValue] || null
+    return methodMap[methodValue]
   }
 }
