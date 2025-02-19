@@ -36,11 +36,6 @@ export class MetadataExtractor {
     }
   }
 
-  private static extractRequestMetadata(prototype: any, methodName: string) {
-    const endpointMetadata = Reflect.getMetadata(METADATA_KEYS.ENDPOINT, prototype, methodName)
-    return endpointMetadata?.request || {}
-  }
-
   static extractMethodNames(prototype: any): string[] {
     return Object.getOwnPropertyNames(prototype).filter((prop) => prop !== 'constructor' && typeof prototype[prop] === 'function')
   }

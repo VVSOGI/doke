@@ -39,7 +39,6 @@ export class ApiDocsGenerator {
 
       const controllerMetadata = MetadataExtractor.extractControllerMetadata(wrapper.metatype)
       const methodNames = MetadataExtractor.extractMethodNames(prototype)
-
       const endpoints = methodNames
         .map((methodName) => MetadataExtractor.extractEndpointMetadata(prototype, methodName))
         .filter((endpoint): endpoint is NonNullable<typeof endpoint> => endpoint !== null)
