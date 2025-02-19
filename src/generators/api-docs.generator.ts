@@ -1,8 +1,9 @@
-import { INestApplication } from '@nestjs/common'
+import type { ApiController } from '../interfaces'
+
 import { MetadataExtractor } from '../utils/metadata-extractor'
 import { FileManager } from '../utils/file-manager'
 import { ERROR_MESSAGES } from '../constants'
-import type { ApiController } from '../interfaces'
+import { DiscoveryService } from '@nestjs/core'
 
 interface ProjectMetadata {
   name: string
@@ -22,8 +23,7 @@ export class ApiDocsGenerator {
     this.fileManager = new FileManager(outputPath, targetFolder)
   }
 
-  async generateDocs(app: INestApplication<any>, Test: any) {
-    const discoveryService = app.get(Test)
+  async generateDocs(discoveryService: DiscoveryService) {
     if (!discoveryService) {
       throw new Error(ERROR_MESSAGES.NO_DISCOVERY_SERVICE)
     }
@@ -39,8 +39,6 @@ export class ApiDocsGenerator {
 
       const controllerMetadata = MetadataExtractor.extractControllerMetadata(wrapper.metatype)
       const methodNames = MetadataExtractor.extractMethodNames(prototype)
-
-      // console.log(methodNames.map((methodName) => MetadataExtractor.extractEndpointMetadata(prototype, methodName)))
 
       const endpoints = methodNames
         .map((methodName) => MetadataExtractor.extractEndpointMetadata(prototype, methodName))
