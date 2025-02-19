@@ -28,39 +28,17 @@ export class MetadataExtractor {
     const method = this.convertMethodValueToString(methodValue)
     if (!method) return null
 
-    const request = this.extractRequestMetadata(prototype, methodName)
-
     return {
       path,
       method,
       name: methodName,
-      description: metadata.description,
-      deprecated: metadata.deprecated,
-      tags: metadata.tags,
-      request,
-      response: metadata.response
+      ...metadata
     }
   }
 
   private static extractRequestMetadata(prototype: any, methodName: string) {
-    const request: Record<string, any> = {}
-
-    const bodyMetadata = Reflect.getMetadata(METADATA_KEYS.BODY, prototype, methodName)
-    if (bodyMetadata) {
-      request.body = bodyMetadata
-    }
-
-    const queryMetadata = Reflect.getMetadata(METADATA_KEYS.QUERY, prototype, methodName)
-    if (queryMetadata) {
-      request.query = queryMetadata
-    }
-
-    const paramMetadata = Reflect.getMetadata(METADATA_KEYS.PARAM, prototype, methodName)
-    if (paramMetadata) {
-      request.params = paramMetadata
-    }
-
-    return request
+    const endpointMetadata = Reflect.getMetadata(METADATA_KEYS.ENDPOINT, prototype, methodName)
+    return endpointMetadata?.request || {}
   }
 
   static extractMethodNames(prototype: any): string[] {
