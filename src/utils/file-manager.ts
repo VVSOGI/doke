@@ -14,9 +14,8 @@ export class FileManager {
   }
 
   async existsDirectory(dirPath: string): Promise<boolean> {
-    const fullPath = path.join(this.basePath, dirPath)
     try {
-      await fs.access(fullPath)
+      await fs.access(dirPath)
       return true
     } catch {
       return false
@@ -38,17 +37,6 @@ export class FileManager {
       await fs.writeFile(fullPath, JSON.stringify(data, null, DEFAULT_CONFIG.JSON_INDENT))
     } catch (error) {
       throw new Error(`${ERROR_MESSAGES.FILE_WRITE_FAILED}: ${error.message}`)
-    }
-  }
-
-  async createDirectoryStructure(): Promise<void> {
-    const directories = ['', DEFAULT_CONFIG.ROUTES]
-
-    for (const dir of directories) {
-      const isExist = await this.existsDirectory(dir)
-      if (!isExist) {
-        await this.createDirectory(dir)
-      }
     }
   }
 
