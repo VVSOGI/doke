@@ -14,7 +14,7 @@ export class DocsWriter {
   async writeDocumentation({ projectMetadata, controllers }: WriteData): Promise<void> {
     for (const dir of this.requiredDirectories) {
       const isExist = await this.fileManager.existsDirectory(dir)
-      if (!isExist) this.fileManager.createDirectory(dir)
+      if (!isExist) await this.fileManager.createDirectory(dir)
     }
     await Promise.all([this.writeProjectMetadata(projectMetadata), this.writeControllerDocs(controllers)])
   }
