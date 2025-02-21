@@ -2,6 +2,11 @@ import type { ApiProperty } from '.'
 
 type MetadataPropertiesKeys = 'body' | 'query' | 'params' | 'response'
 
+export interface ApiDocsControllerMetadata {
+  description?: string
+  tags?: string[]
+}
+
 export type DefaultMetadataProperties = {
   [P in MetadataPropertiesKeys]?: string
 }

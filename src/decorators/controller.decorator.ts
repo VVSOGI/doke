@@ -1,9 +1,5 @@
+import { ApiDocsControllerMetadata } from '../interfaces'
 import { METADATA_KEYS } from '../constants'
-
-interface ApiDocsControllerMetadata {
-  description?: string
-  tags?: string[]
-}
 
 export const ApiDocsController = (metadata: ApiDocsControllerMetadata): ClassDecorator => {
   return (target: any) => {
