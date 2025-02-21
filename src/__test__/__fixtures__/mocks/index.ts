@@ -1,2 +1,2 @@
-export * from './todo-endpoints.mock'
-export * from './todo-controller.mock'
+export * from './endpoints.mock'
+export * from './controllers.mock'
