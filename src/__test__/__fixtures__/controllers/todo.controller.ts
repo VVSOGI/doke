@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { DocsTodoController, DocsGetAllTodos, DocsCreateTodo, DocsUpdateTodo, DocsDeleteTodo } from '../mocks'
+import { Controller } from '@nestjs/common'
+import { DocsTodoController, DocsGetAllTodos, DocsCreateTodo, DocsUpdateTodo, DocsDeleteTodo } from '../decorators'
 import { CreateTodoDto, TodoItem, UpdateTodoDto } from '../types'
 
+@Controller('todo')
 @DocsTodoController()
 export class TodoController {
   @DocsGetAllTodos()
