@@ -6,7 +6,7 @@ jest.mock('../../utils/file-manager')
 jest.mock('../../generators/controller-extractor')
 jest.mock('../../generators/docs-writer')
 
-describe('ApiDocsGenerator', () => {
+describe('Testing that ApiDocsGenerator creates json files with the correct data', () => {
   let apiDocsGenerator: ApiDocsGenerator
   let mockDiscoveryService: jest.Mocked<DiscoveryService>
   let mockControllerExtractor: jest.Mocked<ControllerExtractor>
@@ -20,10 +20,6 @@ describe('ApiDocsGenerator', () => {
 
   beforeEach(() => {
     jest.clearAllMocks()
-
-    mockDiscoveryService = {
-      getControllers: jest.fn()
-    } as any
 
     mockDiscoveryService = {
       getControllers: jest.fn()
@@ -60,5 +56,30 @@ describe('ApiDocsGenerator', () => {
     await apiDocsGenerator.generate()
 
     expect(mockControllerExtractor.extract).toHaveBeenCalled()
+    expect(mockDocsWriter.writeDocumentation).toHaveBeenCalledWith({
+      projectMetadata: {
+        ...testMetadata,
+        routes: ['todo']
+      },
+      controllers: expect.arrayContaining([
+        expect.objectContaining({
+          controllerName: 'TodoController',
+          basePath: 'todo'
+        })
+      ])
+    })
+  })
+
+  it('should handle empty controller list', async () => {
+    mockControllerExtractor.extract.mockResolvedValue([])
+    await apiDocsGenerator.generate()
+
+    expect(mockDocsWriter.writeDocumentation).toHaveBeenCalledWith({
+      projectMetadata: {
+        ...testMetadata,
+        routes: []
+      },
+      controllers: []
+    })
   })
 })
