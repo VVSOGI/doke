@@ -9,7 +9,7 @@ export class FileManager {
     if (!inputPath) {
       throw new Error(ERROR_MESSAGES.INVALID_PATH)
     }
-    this.basePath = path.isAbsolute(inputPath) ? inputPath : path.join(process.cwd(), inputPath)
+    this.basePath = path.isAbsolute(inputPath) ? inputPath + '/' : path.join(process.cwd(), inputPath, '/')
     this.basePath += targetFolder
   }
 
@@ -22,7 +22,7 @@ export class FileManager {
     }
   }
 
-  async createDirectory(dirPath: string): Promise<void> {
+  async createDirectory(dirPath: string = ''): Promise<void> {
     const fullPath = path.join(this.basePath, dirPath)
     try {
       await fs.mkdir(fullPath, { recursive: true })
