@@ -11,6 +11,7 @@ describe('Todo API Decorators', () => {
       const getAllTodosMethod = methodNames.find((method) => method === 'getAllTodos')
       const metadata = MetadataExtractor.extractEndpointMetadata(prototype, getAllTodosMethod)
 
+      expect(metadata?.method).toEqual('GET')
       expect(metadata?.description).toEqual(mock.description)
       expect(metadata?.response).toEqual(mock.response)
     })
@@ -24,6 +25,7 @@ describe('Todo API Decorators', () => {
       const createTodoMethod = methodNames.find((method) => method === 'createTodo')
       const metadata = MetadataExtractor.extractEndpointMetadata(prototype, createTodoMethod)
 
+      expect(metadata?.method).toEqual('POST')
       expect(metadata?.description).toEqual(mock.description)
       expect(metadata?.request).toEqual(mock.request)
       expect(metadata?.response).toEqual(mock.response)
@@ -38,6 +40,7 @@ describe('Todo API Decorators', () => {
       const updateTodoMethod = methodNames.find((method) => method === 'updateTodo')
       const metadata = MetadataExtractor.extractEndpointMetadata(prototype, updateTodoMethod)
 
+      expect(metadata?.method).toEqual('PATCH')
       expect(metadata?.description).toEqual(mock.description)
       expect(metadata?.request).toEqual(mock.request)
       expect(metadata?.response).toEqual(mock.response)
@@ -52,6 +55,7 @@ describe('Todo API Decorators', () => {
       const deleteTodoMethod = methodNames.find((method) => method === 'deleteTodo')
       const metadata = MetadataExtractor.extractEndpointMetadata(prototype, deleteTodoMethod)
 
+      expect(metadata?.method).toEqual('DELETE')
       expect(metadata?.description).toEqual(mock.description)
       expect(metadata?.request).toEqual(mock.request)
       expect(metadata?.response).toEqual(mock.response)
