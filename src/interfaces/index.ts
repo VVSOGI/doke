@@ -3,7 +3,7 @@ export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'ALL' | '
 export interface ApiProperty {
   type: string
   description: string
-  required?: boolean
+  required: boolean
   example?: any
   enum?: string[]
   items?: ApiProperty
