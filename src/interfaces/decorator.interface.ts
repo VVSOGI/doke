@@ -16,15 +16,12 @@ export interface EndpointDecoratorMetadata<P extends DefaultMetadataProperties> 
   request?: {
     body?: {
       properties: P['body'] extends string ? Record<P['body'], ApiProperty> : never
-      required?: string[]
     }
     query?: {
       properties: P['query'] extends string ? Record<P['query'], ApiProperty> : never
-      required?: string[]
     }
     params?: {
       properties: P['params'] extends string ? Record<P['params'], ApiProperty> : never
-      required?: string[]
     }
   }
   response?: {
