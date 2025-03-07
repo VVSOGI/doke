@@ -5,20 +5,22 @@ export const updateTodo = {
       properties: {
         id: {
           type: 'string',
-          description: 'Todo item ID to update'
+          description: 'Todo item ID to update',
+          required: true
         }
-      },
-      required: ['id']
+      }
     },
     body: {
       properties: {
         title: {
           type: 'string',
-          description: 'New todo item title'
+          description: 'New todo item title',
+          required: false
         },
         completed: {
           type: 'boolean',
-          description: 'New completion status'
+          description: 'New completion status',
+          required: false
         }
       }
     }

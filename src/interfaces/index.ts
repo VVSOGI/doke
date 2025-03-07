@@ -26,7 +26,7 @@ export interface ApiResponse {
   type: string
   description?: string
   example?: any
-  properties?: Record<string, ApiProperty>
+  properties?: Record<string, Omit<ApiProperty, 'required'>>
 }
 
 export * from './endpoint.interface'

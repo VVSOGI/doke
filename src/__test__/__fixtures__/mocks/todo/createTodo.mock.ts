@@ -5,10 +5,10 @@ export const createTodo = {
       properties: {
         title: {
           type: 'string',
-          description: 'Todo item title'
+          description: 'Todo item title',
+          required: true
         }
-      },
-      required: ['title']
+      }
     }
   },
   response: {

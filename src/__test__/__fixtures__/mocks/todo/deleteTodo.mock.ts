@@ -5,10 +5,10 @@ export const deleteTodo = {
       properties: {
         id: {
           type: 'string',
-          description: 'Todo item ID to delete'
+          description: 'Todo item ID to delete',
+          required: true
         }
-      },
-      required: ['id']
+      }
     }
   },
   response: {
