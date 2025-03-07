@@ -1,7 +1,8 @@
-import type { ApiController } from '../interfaces'
 import { DiscoveryService } from '@nestjs/core'
 import { InstanceWrapper } from '@nestjs/core/injector/instance-wrapper'
-import { MetadataExtractor } from '../utils/metadata-extractor'
+
+import type { ApiController } from '../interfaces'
+import { MetadataExtractor, CommonUtils } from '../utils'
 import { ERROR_MESSAGES } from '../constants'
 
 export class ControllerExtractor {
@@ -34,7 +35,7 @@ export class ControllerExtractor {
     const controllerMetadata = MetadataExtractor.extractControllerMetadata(wrapper.metatype)
 
     return {
-      controllerName: wrapper.metatype.name,
+      controllerName: CommonUtils.camelToPascalCase(controllerPath),
       basePath: controllerPath,
       description: controllerMetadata?.description,
       tags: controllerMetadata?.tags,
