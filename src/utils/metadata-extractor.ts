@@ -1,5 +1,6 @@
 import { METADATA_KEYS } from '../constants'
 import type { ApiEndpoint, ApiEndpointMetadata, ApiController, HttpMethod } from '../interfaces'
+import { CommonUtils } from './common'
 
 export class MetadataExtractor {
   static extractControllerMetadata(controller: any): Pick<ApiController, 'description' | 'tags'> | null {
@@ -25,7 +26,7 @@ export class MetadataExtractor {
     return {
       path,
       method,
-      name: methodName,
+      name: CommonUtils.pascalCaseWithSpaces(methodName),
       ...metadata
     }
   }
