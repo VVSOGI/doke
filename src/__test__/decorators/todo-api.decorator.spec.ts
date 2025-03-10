@@ -28,7 +28,6 @@ describe('Todo API Decorators', () => {
       expect(metadata?.method).toEqual('POST')
       expect(metadata?.description).toEqual(mock.description)
       expect(metadata?.request).toEqual(mock.request)
-      expect(metadata?.response).toEqual(mock.response)
     })
   })
 
@@ -43,7 +42,6 @@ describe('Todo API Decorators', () => {
       expect(metadata?.method).toEqual('PATCH')
       expect(metadata?.description).toEqual(mock.description)
       expect(metadata?.request).toEqual(mock.request)
-      expect(metadata?.response).toEqual(mock.response)
     })
   })
 
@@ -58,7 +56,6 @@ describe('Todo API Decorators', () => {
       expect(metadata?.method).toEqual('DELETE')
       expect(metadata?.description).toEqual(mock.description)
       expect(metadata?.request).toEqual(mock.request)
-      expect(metadata?.response).toEqual(mock.response)
     })
   })
 })

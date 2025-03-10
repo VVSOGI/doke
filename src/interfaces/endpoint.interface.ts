@@ -15,8 +15,6 @@ export interface ApiEndpointMetadata {
   description: string
   request?: ApiRequest
   response?: ApiResponse
-  requestExample?: any
-  responseExample?: any
   deprecated?: boolean
   tags?: string[]
 }

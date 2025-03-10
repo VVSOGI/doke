@@ -3,6 +3,7 @@ import { ControllerExtractor } from '../../generators'
 import { ERROR_MESSAGES } from '../../constants'
 import { TodoController } from '../__fixtures__/controllers'
 import { getControllersMockData } from '../__fixtures__/mocks'
+import { CommonUtils, MetadataExtractor } from '../../'
 
 describe('Testing ControllerExtractor extract right data', () => {
   let controllerExtractor: ControllerExtractor
@@ -54,9 +55,10 @@ describe('Testing ControllerExtractor extract right data', () => {
   it('should extract controller information correctly', async () => {
     mockDiscoveryService.getControllers.mockReturnValue([mockWrapper])
     const result = await controllerExtractor.extract()
+    const controllerName = MetadataExtractor.extractControllerPath(TodoController)
 
     expect(result).toHaveLength(1)
-    expect(result[0].controllerName).toEqual(TodoController.name)
+    expect(result[0].controllerName).toEqual(CommonUtils.camelToPascalCase(controllerName))
     expect(result[0].description).toEqual(getControllersMockData('todoController').description)
     expect(result[0].basePath).toEqual('todo')
   })

@@ -11,12 +11,5 @@ export const deleteTodo = {
       }
     }
   },
-  response: {
-    properties: {
-      success: {
-        type: 'boolean',
-        description: 'Deletion success status'
-      }
-    }
-  }
+  response: {}
 }

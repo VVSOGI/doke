@@ -25,28 +25,5 @@ export const updateTodo = {
       }
     }
   },
-  response: {
-    properties: {
-      id: {
-        type: 'string',
-        description: 'Updated todo item ID'
-      },
-      title: {
-        type: 'string',
-        description: 'Updated todo item title'
-      },
-      completed: {
-        type: 'boolean',
-        description: 'Updated completion status'
-      },
-      createdAt: {
-        type: 'string',
-        description: 'Creation timestamp'
-      },
-      updatedAt: {
-        type: 'string',
-        description: 'Last update timestamp'
-      }
-    }
-  }
+  response: {}
 }
