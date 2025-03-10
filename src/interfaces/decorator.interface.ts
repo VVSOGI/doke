@@ -1,4 +1,4 @@
-import type { ApiProperty, ApiResponse } from '.'
+import type { ApiProperty } from '.'
 
 type MetadataPropertiesKeys = 'body' | 'query' | 'params' | 'response'
 
@@ -25,7 +25,6 @@ export interface EndpointDecoratorMetadata<P extends DefaultMetadataProperties> 
     }
   }
   response?: {
-    properties?: P['response'] extends string ? Record<P['response'], ApiResponse> : never
     example?: P['response'] extends string ? Record<P['response'], any> | Array<Record<P['response'], any>> : never
   }
   deprecated?: boolean
