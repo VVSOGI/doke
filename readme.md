@@ -1,5 +1,9 @@
 # Doke
 
+<img width="1552" alt="스크린샷 2025-03-12 오전 1 30 29" src="https://github.com/user-attachments/assets/8a95c6aa-4de5-4ed9-ad6b-8b4bb3fd2000" />
+(preview)
+<br /><br />
+
 API documentation generator for NestJS applications with beautiful UI 🎨
 
 ## Features
@@ -54,30 +58,22 @@ export const DocsCreateUser = () => {
         properties: {
           email: {
             type: 'string',
-            description: 'User email address'
+            description: 'User email address',
+            required: true
           },
           name: {
             type: 'string',
-            description: 'User full name'
+            description: 'User full name',
+            required: false
           }
         },
-        required: ['email', 'name']
       }
     },
     response: {
-      properties: {
-        id: {
-          type: 'string',
-          description: 'Created user ID'
-        },
-        email: {
-          type: 'string',
-          description: 'User email'
-        },
-        name: {
-          type: 'string',
-          description: 'User name'
-        }
+      example: {
+        id: "98874008-8915-4d53-9239-3913f7ee2089",
+        email: "test@test.com",
+        name: "benny"
       }
     }
   }
@@ -153,18 +149,6 @@ npm install -g @doke/ui
 doke serve ./docs
 ```
 
-### Controller Decorators
-
-- `@ApiDocsController()` - Add metadata to controller
-
-### Method Decorators
-
-- `@ApiDocsEndpoint()` - Document API endpoint
-
-### UI Customization
-
-Coming soon...
-
 ## Examples (Not support yet)
 
 You can find more examples in our [examples directory](./examples).
@@ -178,7 +162,3 @@ We welcome contributions! Please see our [contributing guide](CONTRIBUTING.md) f
 - 📝 [Documentation](https://doke.dev)
 - 💬 [GitHub Discussions](https://github.com/yourusername/doke/discussions)
 - 🐛 [Bug Reports](https://github.com/yourusername/doke/issues)
-
-## License
-
-MIT © [Your Name]
