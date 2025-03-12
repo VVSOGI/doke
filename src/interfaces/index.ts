@@ -31,3 +31,4 @@ export interface ApiResponse {
 export * from './endpoint.interface'
 export * from './documentation.interface'
 export * from './decorator.interface'
+export * from './metadata.interface'
