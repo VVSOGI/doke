@@ -1,6 +1,7 @@
 import { DiscoveryService } from '@nestjs/core'
 import { ApiDocsGenerator } from '../../generators'
 import { ControllerExtractor, DocsWriter } from '../../generators'
+import { ReceivedMetadata } from 'src/interfaces'
 
 jest.mock('../../utils/file-manager')
 jest.mock('../../generators/controller-extractor')
@@ -12,10 +13,11 @@ describe('Testing that ApiDocsGenerator creates json files with the correct data
   let mockControllerExtractor: jest.Mocked<ControllerExtractor>
   let mockDocsWriter: jest.Mocked<DocsWriter>
 
-  const testMetadata = {
+  const testMetadata: ReceivedMetadata = {
     name: 'test-api',
     description: 'Test API Description',
-    version: '1.0.0'
+    version: '1.0.0',
+    serverUrl: 'http://localhost:3000'
   }
 
   beforeEach(() => {
