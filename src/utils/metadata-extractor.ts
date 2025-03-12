@@ -24,7 +24,7 @@ export class MetadataExtractor {
     const method = this.convertMethodValueToString(methodValue)
 
     return {
-      path,
+      path: path === '/' ? '' : `/${path}`,
       method,
       name: CommonUtils.pascalCaseWithSpaces(methodName),
       ...metadata
