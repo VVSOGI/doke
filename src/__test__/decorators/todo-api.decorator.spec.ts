@@ -1,6 +1,6 @@
 import { MetadataExtractor } from '../../utils'
 import { TodoController } from '../__fixtures__/controllers'
-import { createTodo, deleteTodo, getAllTodos, updateTodo } from '../__fixtures__/mocks/todo'
+import { createTodo, deleteTodo, getAllTodos, getAllTodosByDates, updateTodo } from '../__fixtures__/mocks/todo'
 
 describe('Todo API Decorators', () => {
   describe('DocsGetAllTodos', () => {
@@ -13,6 +13,19 @@ describe('Todo API Decorators', () => {
       expect(metadata?.method).toEqual('GET')
       expect(metadata?.description).toEqual(getAllTodos.description)
       expect(metadata?.response).toEqual(getAllTodos.response)
+    })
+  })
+
+  describe('DocsGetAllTodosByDates', () => {
+    it('should call with correct metadata from mock', () => {
+      const prototype = TodoController.prototype
+      const methodNames = MetadataExtractor.extractMethodNames(prototype) as any[]
+      const getAllTodosByDatesMethod = methodNames.find((method) => method === 'getAllTodosByDates')
+      const metadata = MetadataExtractor.extractEndpointMetadata(prototype, getAllTodosByDatesMethod)
+
+      expect(metadata?.method).toEqual('GET')
+      expect(metadata?.description).toEqual(getAllTodosByDates.description)
+      expect(metadata?.response).toEqual(getAllTodosByDates.response)
     })
   })
 

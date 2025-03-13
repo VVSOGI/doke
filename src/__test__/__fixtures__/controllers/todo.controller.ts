@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common'
-import { DocsTodoController, DocsGetAllTodos, DocsCreateTodo, DocsUpdateTodo, DocsDeleteTodo } from '../decorators'
+import { DocsTodoController, DocsGetAllTodos, DocsCreateTodo, DocsUpdateTodo, DocsDeleteTodo, DocsGetAllTodosByDates } from '../decorators'
 import { CreateTodoDto, TodoItem, UpdateTodoDto } from '../types'
 
 @Controller('todo')
@@ -9,6 +9,12 @@ export class TodoController {
   @Get()
   @DocsGetAllTodos()
   getAllTodos(): TodoItem[] {
+    return []
+  }
+
+  @Get('/dates')
+  @DocsGetAllTodosByDates()
+  getAllTodosByDates(): TodoItem[] {
     return []
   }
 
