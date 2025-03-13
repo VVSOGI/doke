@@ -23,8 +23,16 @@ export class MetadataExtractor {
     const methodValue = Reflect.getMetadata(METADATA_KEYS.METHOD, prototype[methodName])
     const method = this.convertMethodValueToString(methodValue)
 
+    let formattedPath = path
+
+    if (formattedPath === '/') {
+      formattedPath = ''
+    } else if (formattedPath.startsWith(':')) {
+      formattedPath = '/' + formattedPath
+    }
+
     return {
-      path: path === '/' ? '' : `/${path}`,
+      path: formattedPath,
       method,
       name: CommonUtils.pascalCaseWithSpaces(methodName),
       ...metadata
