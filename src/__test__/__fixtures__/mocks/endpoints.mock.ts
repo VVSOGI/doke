@@ -1,10 +1,11 @@
-import { createTodo, deleteTodo, getAllTodos, updateTodo } from './todo'
+import { createTodo, deleteTodo, getAllTodos, updateTodo, getAllTodosByDates } from './todo'
 
 const MOCKS = {
   todo: {
     getAllTodos,
     createTodo,
     updateTodo,
+    getAllTodosByDates,
     deleteTodo
   }
 }
