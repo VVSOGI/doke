@@ -1,5 +1,19 @@
-export const getAllTodos = {
+import { EndpointDecoratorMetadata } from '../../../../interfaces'
+
+export const getAllTodos: EndpointDecoratorMetadata<{
+  headers: 'Content-Type'
+  response: 'id' | 'title' | 'completed' | 'createdAt' | 'updatedAt'
+}> = {
   description: 'Get all todo items',
+  request: {
+    headers: {
+      properties: {
+        'Content-Type': {
+          default: 'application/json'
+        }
+      }
+    }
+  },
   response: {
     example: [
       {

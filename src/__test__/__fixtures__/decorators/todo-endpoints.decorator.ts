@@ -4,12 +4,7 @@ import { getMockData } from '../mocks'
 
 export const DocsGetAllTodos = () => {
   const mock = getMockData('todo', 'getAllTodos')
-
-  const metadata: EndpointDecoratorMetadata<{
-    response: 'id' | 'title' | 'completed' | 'createdAt' | 'updatedAt'
-  }> = mock
-
-  return ApiDocsEndpoint(metadata)
+  return ApiDocsEndpoint(mock)
 }
 
 export const DocsGetAllTodosByDates = () => {
