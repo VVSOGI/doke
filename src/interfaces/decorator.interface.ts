@@ -1,6 +1,6 @@
-import type { ApiProperty } from '.'
+import type { ApiHeaderProperty, ApiProperty } from '.'
 
-type MetadataPropertiesKeys = 'body' | 'query' | 'params' | 'response'
+type MetadataPropertiesKeys = 'body' | 'query' | 'params' | 'response' | 'headers'
 
 export interface ApiDocsControllerMetadata {
   description?: string
@@ -22,6 +22,9 @@ export interface EndpointDecoratorMetadata<P extends DefaultMetadataProperties> 
     }
     params?: {
       properties: P['params'] extends string ? Record<P['params'], ApiProperty> : never
+    }
+    headers?: {
+      properties: P['headers'] extends string ? Record<P['headers'], ApiHeaderProperty> : never
     }
   }
   response?: {
