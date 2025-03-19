@@ -5,21 +5,27 @@ export interface ApiProperty {
   description: string
   required: boolean
   example?: any
-  enum?: string[]
-  items?: ApiProperty
 }
 
 export interface ApiParameters {
   type: string
   properties: Record<string, ApiProperty>
-  required?: string[]
+}
+
+export interface ApiHeaderProperty {
+  default?: string
+  required?: boolean
+}
+
+export interface ApiHeadersParameters {
+  properties: Record<string, ApiHeaderProperty>
 }
 
 export interface ApiRequest {
   body?: ApiParameters
   query?: ApiParameters
   params?: ApiParameters
-  headers?: ApiParameters
+  headers?: ApiHeadersParameters
 }
 
 export interface ApiResponse {

@@ -13,11 +13,6 @@ export interface ApiDocumentation {
     title: string
     description?: string
     version: string
-    contact?: {
-      name?: string
-      email?: string
-      url?: string
-    }
   }
   servers: Array<{
     url: string
