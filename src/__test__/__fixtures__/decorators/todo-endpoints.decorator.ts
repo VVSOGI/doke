@@ -1,4 +1,3 @@
-import { EndpointDecoratorMetadata } from '../../../interfaces'
 import { ApiDocsEndpoint } from '../../../decorators'
 import { getMockData } from '../mocks'
 
@@ -9,12 +8,7 @@ export const DocsGetAllTodos = () => {
 
 export const DocsGetAllTodosByDates = () => {
   const mock = getMockData('todo', 'getAllTodosByDates')
-
-  const metadata: EndpointDecoratorMetadata<{
-    response: 'data' | 'total'
-  }> = mock
-
-  return ApiDocsEndpoint(metadata)
+  return ApiDocsEndpoint(mock)
 }
 
 export const DocsCreateTodo = () => {

@@ -1,4 +1,8 @@
-export const getAllTodosByDates = {
+import { EndpointDecoratorMetadata } from '../../../../interfaces'
+
+export const getAllTodosByDates: EndpointDecoratorMetadata<{
+  response: 'data' | 'total'
+}> = {
   description: 'Get all todo items by dates',
   response: {
     example: {
