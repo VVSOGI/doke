@@ -36,11 +36,5 @@ export const DocsUpdateTodo = () => {
 
 export const DocsDeleteTodo = () => {
   const mock = getMockData('todo', 'deleteTodo')
-
-  const metadata: EndpointDecoratorMetadata<{
-    params: 'id'
-    response: 'success'
-  }> = mock
-
-  return ApiDocsEndpoint(metadata)
+  return ApiDocsEndpoint(mock)
 }

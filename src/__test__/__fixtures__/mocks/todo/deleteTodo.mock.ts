@@ -1,4 +1,9 @@
-export const deleteTodo = {
+import { EndpointDecoratorMetadata } from '../../../../interfaces'
+
+export const deleteTodo: EndpointDecoratorMetadata<{
+  params: 'id'
+  response: 'success'
+}> = {
   description: 'Delete a todo item',
   request: {
     params: {
