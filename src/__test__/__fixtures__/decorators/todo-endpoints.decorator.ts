@@ -19,13 +19,7 @@ export const DocsGetAllTodosByDates = () => {
 
 export const DocsCreateTodo = () => {
   const mock = getMockData('todo', 'createTodo')
-
-  const metadata: EndpointDecoratorMetadata<{
-    body: 'title'
-    response: 'id' | 'title' | 'completed' | 'createdAt' | 'updatedAt'
-  }> = mock
-
-  return ApiDocsEndpoint(metadata)
+  return ApiDocsEndpoint(mock)
 }
 
 export const DocsUpdateTodo = () => {
