@@ -13,8 +13,10 @@ export interface ApiParameters {
 }
 
 export interface ApiHeaderProperty {
-  default?: string
-  required?: boolean
+  default: string
+  credentials?: {
+    type: 'Bearer' | 'Basic' | 'custom'
+  }
 }
 
 export interface ApiHeadersParameters {
