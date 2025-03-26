@@ -1,5 +1,5 @@
 {
-  "name": "doke",
+  "name": "doke-nest",
   "version": "1.0.0",
   "description": "Simple and beautiful API documentation generator for NestJS",
   "author": "vvsogi <vvsogi@gmail.com>",
