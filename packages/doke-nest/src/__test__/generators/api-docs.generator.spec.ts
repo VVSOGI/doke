@@ -1,7 +1,7 @@
 import { DiscoveryService } from '@nestjs/core'
 import { ApiDocsGenerator } from '../../generators'
 import { ControllerExtractor, DocsWriter } from '../../generators'
-import { ReceivedMetadata } from 'src/interfaces'
+import { ReceivedMetadata } from '../../interfaces'
 
 jest.mock('../../utils/file-manager')
 jest.mock('../../generators/controller-extractor')
