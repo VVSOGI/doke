@@ -18,7 +18,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "yarn node -r typescript/bin/tsc",
     "test": "jest --watch --config ./jest.config.ts",
     "test:verbose": "jest --watch --config --verbose ./jest.config.ts",
     "lint": "eslint . --ext .ts",
