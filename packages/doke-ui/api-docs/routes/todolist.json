@@ -1,0 +1,296 @@
+{
+  "controllerName": "Todolist",
+  "basePath": "todolist",
+  "description": "Todolist management API endpoints",
+  "tags": [
+    "Todolist"
+  ],
+  "endpoints": [
+    {
+      "path": "",
+      "method": "POST",
+      "name": "Create Todolist",
+      "description": "\n      This endpoint creates a new todolist item within a specified category. \n      Users must provide a title and a valid categoryId as required parameters. \n      The newly created todolist will be automatically assigned an order value within its category, a unique ID, \n      and will be set to unchecked (incomplete) status by default while timestamps for creation and updates are recorded.\n    ",
+      "request": {
+        "body": {
+          "properties": {
+            "title": {
+              "type": "string",
+              "description": "Write title of todolist create you want",
+              "required": true
+            },
+            "categoryId": {
+              "type": "string",
+              "description": "The location category ID for which you want to create a todolist",
+              "required": true
+            }
+          }
+        },
+        "headers": {
+          "properties": {
+            "Content-Type": {
+              "default": "application/json"
+            }
+          }
+        }
+      },
+      "response": {
+        "example": {
+          "id": "ea2a1198-9b29-4258-9021-409b81f57caf",
+          "categoryId": "f144cc78-34d9-4d0a-9e95-48cf7102dce3",
+          "title": "create test todolist",
+          "checked": false,
+          "order": 13,
+          "createdAt": "2025-02-11T09:30:08.938Z",
+          "updatedAt": "2025-02-11T09:30:08.938Z"
+        }
+      }
+    },
+    {
+      "path": "",
+      "method": "GET",
+      "name": "Get Todolists",
+      "description": "This endpoint retrieves all todolist items across all categories in the system.\n  It returns a comprehensive array of todolist objects containing complete details for each item.\n  Each todolist object includes its unique identifier, associated category, title, completion status, order position, and timestamp information.\n  This endpoint is useful for global views, dashboard displays, or administrative interfaces that need to show all todolist items regardless of category.",
+      "request": {},
+      "response": {
+        "example": {
+          "data": [
+            {
+              "id": "ea2a1198-9b29-4258-9021-409b81f57caf",
+              "categoryId": "f144cc78-34d9-4d0a-9e95-48cf7102dce3",
+              "title": "create test todolist",
+              "checked": false,
+              "order": 1,
+              "createdAt": "2025-02-11T09:30:08.938Z",
+              "updatedAt": "2025-02-11T09:30:08.938Z"
+            },
+            {
+              "id": "252a1198-9b29-4258-9021-409b81f57caf",
+              "categoryId": "f144cc78-34d9-4d0a-9e95-48cf7102dce3",
+              "title": "create test todolist",
+              "checked": false,
+              "order": 2,
+              "createdAt": "2025-02-11T09:30:08.938Z",
+              "updatedAt": "2025-02-11T09:30:08.938Z"
+            },
+            {
+              "id": "132a1198-9b29-4258-9021-409b81f57caf",
+              "categoryId": "f144cc78-34d9-4d0a-9e95-48cf7102dce3",
+              "title": "create test todolist",
+              "checked": false,
+              "order": 3,
+              "createdAt": "2025-02-11T09:30:08.938Z",
+              "updatedAt": "2025-02-11T09:30:08.938Z"
+            }
+          ],
+          "total": 3
+        }
+      }
+    },
+    {
+      "path": "/:categoryId",
+      "method": "GET",
+      "name": "Get Todolists By Category Id",
+      "description": "\n      This endpoint retrieves a list of todolist items for a specific category identified by the categoryId parameter.\n      It allows optional filtering by completion status using the \"checked\" query parameter.\n      The response returns an array of todolist items with their complete details including ID, title, order, completion status, and timestamps.\n      This endpoint is ideal for displaying all todolist items within a specific category, supporting both complete and incomplete item views.\n    ",
+      "request": {
+        "query": {
+          "properties": {
+            "checked": {
+              "type": "boolean",
+              "description": "A status value that distinguishes completed from incomplete todolist",
+              "required": false
+            }
+          }
+        },
+        "params": {
+          "properties": {
+            "categoryId": {
+              "type": "string",
+              "description": "The location category's id for which you find todolist's",
+              "required": true
+            }
+          }
+        }
+      },
+      "response": {
+        "example": {
+          "data": [
+            {
+              "id": "ea2a1198-9b29-4258-9021-409b81f57caf",
+              "categoryId": "f144cc78-34d9-4d0a-9e95-48cf7102dce3",
+              "title": "create test todolist",
+              "checked": false,
+              "order": 1,
+              "createdAt": "2025-02-11T09:30:08.938Z",
+              "updatedAt": "2025-02-11T09:30:08.938Z"
+            },
+            {
+              "id": "252a1198-9b29-4258-9021-409b81f57caf",
+              "categoryId": "f144cc78-34d9-4d0a-9e95-48cf7102dce3",
+              "title": "create test todolist",
+              "checked": false,
+              "order": 2,
+              "createdAt": "2025-02-11T09:30:08.938Z",
+              "updatedAt": "2025-02-11T09:30:08.938Z"
+            },
+            {
+              "id": "132a1198-9b29-4258-9021-409b81f57caf",
+              "categoryId": "f144cc78-34d9-4d0a-9e95-48cf7102dce3",
+              "title": "create test todolist",
+              "checked": false,
+              "order": 3,
+              "createdAt": "2025-02-11T09:30:08.938Z",
+              "updatedAt": "2025-02-11T09:30:08.938Z"
+            }
+          ],
+          "total": 3
+        }
+      }
+    },
+    {
+      "path": "/dates/:categoryId",
+      "method": "GET",
+      "name": "Get Todolists By Date",
+      "description": "\n      This endpoint retrieves todolist items organized by date for a specific category. \n      It allows filtering by completion status through the optional \"checked\" query parameter. The response returns todolist items grouped by date, \n      with each date containing an array of todolist objects that were either created or updated on that date. \n      This endpoint is particularly useful for displaying calendar views or tracking todolist activity over time.\n    ",
+      "request": {
+        "query": {
+          "properties": {
+            "checked": {
+              "type": "boolean",
+              "description": "A status value that distinguishes completed from incomplete todolist",
+              "required": false
+            }
+          }
+        },
+        "params": {
+          "properties": {
+            "categoryId": {
+              "type": "string",
+              "description": "The location category's id for which you find todolist's",
+              "required": true
+            }
+          }
+        }
+      },
+      "response": {
+        "example": {
+          "data": [
+            {
+              "date": "2025-02-02",
+              "todolists": [
+                {
+                  "id": "535edc91-2d9a-404c-a400-175a8e5b2a08",
+                  "categoryId": "f144cc78-34d9-4d0a-9e95-48cf7102dce3",
+                  "title": "changed",
+                  "checked": true,
+                  "order": 12,
+                  "createdAt": "2025-02-02T23:46:46.529Z",
+                  "updatedAt": "2025-02-02T23:46:54.255Z"
+                },
+                {
+                  "id": "c62af2fe-4f20-4ed4-8242-ea4deb243e05",
+                  "categoryId": "f144cc78-34d9-4d0a-9e95-48cf7102dce3",
+                  "title": "somethin",
+                  "checked": true,
+                  "order": 11,
+                  "createdAt": "2025-02-02T23:46:27.215Z",
+                  "updatedAt": "2025-02-02T23:46:28.977Z"
+                }
+              ]
+            },
+            {
+              "date": "2025-01-31",
+              "todolists": [
+                {
+                  "id": "2a9441d7-b8c9-4e03-960f-10215801751a",
+                  "categoryId": "f144cc78-34d9-4d0a-9e95-48cf7102dce3",
+                  "title": "Wabirubi dupdup!!!",
+                  "checked": true,
+                  "order": 0,
+                  "createdAt": "2025-01-22T03:05:22.323Z",
+                  "updatedAt": "2025-01-31T23:26:47.174Z"
+                }
+              ]
+            }
+          ],
+          "total": 2
+        }
+      }
+    },
+    {
+      "path": "",
+      "method": "PATCH",
+      "name": "Update Todo",
+      "description": "This endpoint updates the properties of a specific todolist item identified by its unique ID.\n  It allows modifying the title and/or completion status of the todolist item, with both fields being optional.\n  The response returns the complete updated todolist object with all its properties, including the modified fields and updated timestamp.\n  This endpoint supports partial updates, making it flexible for various editing scenarios like marking items complete or renaming tasks.",
+      "request": {
+        "body": {
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Target todolist id that you want update",
+              "required": true
+            },
+            "title": {
+              "type": "string",
+              "description": "The title of the todolist you want to update",
+              "required": false
+            },
+            "checked": {
+              "type": "boolean",
+              "description": "Update the completion status of the todolist you want to update property",
+              "required": false
+            }
+          }
+        },
+        "headers": {
+          "properties": {
+            "Content-Type": {
+              "default": "application/json"
+            }
+          }
+        }
+      },
+      "response": {
+        "example": {
+          "id": "d55232cb-c8df-465e-8ea7-ce11e884dc2e",
+          "categoryId": "f144cc78-34d9-4d0a-9e95-48cf7102dce3",
+          "title": "update title",
+          "checked": true,
+          "order": 2,
+          "createdAt": "2025-01-22T03:04:28.724Z",
+          "updatedAt": "2025-02-11T10:01:42.379Z"
+        }
+      }
+    },
+    {
+      "path": "/order",
+      "method": "PATCH",
+      "name": "Update Todo Order",
+      "description": "This endpoint updates the display order of a specific todolist item within its category.\n  It requires both the todolist's unique identifier and the new numerical order position to be provided.\n  The order value determines the position of the todolist item when displayed in a sequence with other items.\n  This endpoint is essential for implementing drag-and-drop reordering functionality or manual sorting of todolist items.",
+      "request": {
+        "body": {
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Target todolist id that you want update",
+              "required": true
+            },
+            "order": {
+              "type": "number",
+              "description": "The order number of the todolist you want to update",
+              "required": true
+            }
+          }
+        },
+        "headers": {
+          "properties": {
+            "Content-Type": {
+              "default": "application/json"
+            }
+          }
+        }
+      },
+      "response": {}
+    }
+  ]
+}
