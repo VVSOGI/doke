@@ -12,5 +12,15 @@
   "typescript.tsdk": ".yarn/sdks/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "eslint.workingDirectories": [{ "pattern": "../packages/*/" }],
-  "eslint.validate": ["javascript", "typescript", "javascriptreact", "html", "typescriptreact"]
+  "eslint.validate": ["javascript", "typescript", "javascriptreact", "html", "typescriptreact"],
+  "draw.folder.structure.exclude": [
+    "./**/*/dist",
+    "./**/*/.next",
+    "./**/*/.yarn",
+    ".git",
+    "**/*.bin",
+    ".yarn",
+    "packages/doke-nest/**/*",
+    "packages/doke-ui/**/*"
+  ]
 }
