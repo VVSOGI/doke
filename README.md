@@ -13,8 +13,3 @@ API documentation generator for NestJS applications with beautiful UI 🎨
 - Easy to use and integrate
 - Automatic metadata extraction
 - Customizable themes and layouts
-
-## Extension version
-
-- Prettier Code formatter v10.4.0
-- ESLint - v2.4.4
