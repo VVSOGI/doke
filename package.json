@@ -6,7 +6,8 @@
   "license": "MIT",
   "private": true,
   "workspaces": [
-    "packages/doke-nest"
+    "packages/doke-nest",
+    "packages/doke-cli"
   ],
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^6.0.0",
