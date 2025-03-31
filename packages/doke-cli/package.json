@@ -23,7 +23,8 @@
   ],
   "bin": "./dist/index.js",
   "scripts": {
-    "test": "cross-env FORCE_COLOR=true jest"
+    "test": "cross-env FORCE_COLOR=true jest",
+    "build": "tsc"
   },
   "dependencies": {
     "@types/node": "^22.13.14",
