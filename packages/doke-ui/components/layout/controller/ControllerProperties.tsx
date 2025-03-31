@@ -1,11 +1,11 @@
-import React, { memo } from "react";
-import { PropertyTitle } from "@/components";
-import { NotoSans } from "@/lib/assets";
-import { DefaultProperty } from "@/lib/types";
+import React, { memo } from 'react'
+import { PropertyTitle } from '@/components'
+import { NotoSans } from '@/lib/assets'
+import { DefaultProperty } from '@/lib/types'
 
 interface Props {
-  title: string;
-  properties: Record<string, DefaultProperty> | undefined;
+  title: string
+  properties: Record<string, DefaultProperty> | undefined
 }
 
 function Component({ title, properties }: Props) {
@@ -27,7 +27,7 @@ function Component({ title, properties }: Props) {
           </div>
         ))}
     </div>
-  );
+  )
 }
 
-export const ControllerProperties = memo(Component);
+export const ControllerProperties = memo(Component)

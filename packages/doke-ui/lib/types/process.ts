@@ -1,5 +1,5 @@
 export interface HeaderCredential {
-  key: string;
-  type: "Bearer" | "Basic" | "custom";
-  value: string;
+  key: string
+  type: 'Bearer' | 'Basic' | 'custom'
+  value: string
 }

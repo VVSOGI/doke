@@ -1,9 +1,9 @@
-import React, { memo } from "react";
+import React, { memo } from 'react'
 
 interface Props {
-  title: string;
-  properties: Record<string, string>;
-  setProperties: (value: React.SetStateAction<Record<string, string> | undefined>) => void;
+  title: string
+  properties: Record<string, string>
+  setProperties: (value: React.SetStateAction<Record<string, string> | undefined>) => void
 }
 
 function Component({ title, properties, setProperties }: Props) {
@@ -19,24 +19,24 @@ function Component({ title, properties, setProperties }: Props) {
                 <input
                   value={properties[key]}
                   onChange={(e) => {
-                    const newProps = { ...properties };
-                    newProps[key] = e.currentTarget.value;
-                    setProperties(newProps);
+                    const newProps = { ...properties }
+                    newProps[key] = e.currentTarget.value
+                    setProperties(newProps)
                   }}
                   className={`
                     w-full py-4 px-8 rounded-sm outline-none border-none bg-gray-600 text-1 font-300 text-white
                     placeholder:text-gray-200
                   `}
-                  placeholder={"Please enter a valid value."}
+                  placeholder={'Please enter a valid value.'}
                   type="text"
                 />
               </div>
-            );
+            )
           })}
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export const CurlProperty = memo(Component);
+export const CurlProperty = memo(Component)

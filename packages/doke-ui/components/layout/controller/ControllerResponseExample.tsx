@@ -1,11 +1,11 @@
-"use client";
+'use client'
 
-import React, { memo } from "react";
-import { JsonView, PropertyTitle } from "@/components";
-import { Endpoint } from "@/lib/types";
+import React, { memo } from 'react'
+import { JsonView, PropertyTitle } from '@/components'
+import { Endpoint } from '@/lib/types'
 
 interface Props {
-  endpoint: Endpoint;
+  endpoint: Endpoint
 }
 
 function Component({ endpoint }: Props) {
@@ -16,7 +16,7 @@ function Component({ endpoint }: Props) {
         <JsonView src={endpoint.response.example} collapsed={2} name={false} />
       </div>
     </div>
-  );
+  )
 }
 
-export const ControllerResponseExample = memo(Component);
+export const ControllerResponseExample = memo(Component)

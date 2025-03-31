@@ -1,9 +1,9 @@
-import React, { ButtonHTMLAttributes } from "react";
-import { Icon } from "@/components";
-import { ICONS_LIST } from "@/lib/constants";
+import React, { ButtonHTMLAttributes } from 'react'
+import { Icon } from '@/components'
+import { ICONS_LIST } from '@/lib/constants'
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-  className?: string;
+  className?: string
 }
 
 export function ExecutePanelOpenButton({ className, ...props }: Props) {
@@ -20,5 +20,5 @@ export function ExecutePanelOpenButton({ className, ...props }: Props) {
       <div className="pl-8 text-2 font-500">Execute</div>
       <Icon className="px-4" icons={ICONS_LIST.PLAY_ARROW} />
     </button>
-  );
+  )
 }

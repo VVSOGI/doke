@@ -1,9 +1,9 @@
-import React, { memo } from "react";
-import { Icon } from "@/components";
-import { ICONS_LIST } from "@/lib/constants";
+import React, { memo } from 'react'
+import { Icon } from '@/components'
+import { ICONS_LIST } from '@/lib/constants'
 
 interface Props {
-  onClick: () => void;
+  onClick: () => void
 }
 
 function Component({ onClick }: Props) {
@@ -20,7 +20,7 @@ function Component({ onClick }: Props) {
         onClick={onClick}
       />
     </div>
-  );
+  )
 }
 
-export const ExecuteHeader = memo(Component);
+export const ExecuteHeader = memo(Component)

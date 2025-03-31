@@ -1,9 +1,9 @@
-import React, { memo } from "react";
-import { JsonView } from "@/components";
+import React, { memo } from 'react'
+import { JsonView } from '@/components'
 
 interface Props {
-  title: string;
-  example: Record<string, any> | Record<string, any>[];
+  title: string
+  example: Record<string, any> | Record<string, any>[]
 }
 
 function Component({ title, example }: Props) {
@@ -13,8 +13,8 @@ function Component({ title, example }: Props) {
       <div className="w-full h-fit p-8 bg-gray-800 rounded-sm">
         <JsonView
           src={example}
-          theme={"chalk"}
-          style={{ backgroundColor: "transparent" }}
+          theme={'chalk'}
+          style={{ backgroundColor: 'transparent' }}
           displayObjectSize={false}
           enableClipboard={true}
           name={false}
@@ -22,7 +22,7 @@ function Component({ title, example }: Props) {
         />
       </div>
     </div>
-  );
+  )
 }
 
-export const ExecuteResponse = memo(Component);
+export const ExecuteResponse = memo(Component)

@@ -1,17 +1,17 @@
-"use client";
+'use client'
 
-import React, { memo } from "react";
-import { useExecuteCommand } from "@/contexts";
-import { useApiExecute, useFormattedCommand } from "@/hooks";
-import { ApiExecuteButton, CurlCommand, CurlProperties, ExecuteHeader, ExecuteResponse } from "@/components";
-import { NotoSans } from "@/lib/assets";
+import React, { memo } from 'react'
+import { useExecuteCommand } from '@/contexts'
+import { useApiExecute, useFormattedCommand } from '@/hooks'
+import { ApiExecuteButton, CurlCommand, CurlProperties, ExecuteHeader, ExecuteResponse } from '@/components'
+import { NotoSans } from '@/lib/assets'
 
 function Component() {
-  const { controllerData, selected, setSelected } = useExecuteCommand();
-  const { command } = useFormattedCommand();
-  const { responseData, onClickExecute } = useApiExecute();
+  const { controllerData, selected, setSelected } = useExecuteCommand()
+  const { command } = useFormattedCommand()
+  const { responseData, onClickExecute } = useApiExecute()
 
-  const styles = selected ? "flex-1" : "flex-0";
+  const styles = selected ? 'flex-1' : 'flex-0'
 
   return (
     selected && (
@@ -41,7 +41,7 @@ function Component() {
         </div>
       </div>
     )
-  );
+  )
 }
 
-export const ExecutePanel = memo(Component);
+export const ExecutePanel = memo(Component)

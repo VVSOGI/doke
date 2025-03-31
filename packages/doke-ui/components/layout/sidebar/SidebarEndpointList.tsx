@@ -1,23 +1,23 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import { useActiveSection, useEndpointData } from "@/contexts";
-import { EndpointButton, ControllerButton } from "@/components";
+import { useState } from 'react'
+import { useActiveSection, useEndpointData } from '@/contexts'
+import { EndpointButton, ControllerButton } from '@/components'
 
 export function SidebarEndpointList() {
-  const { endpointData } = useEndpointData();
-  const { activeSection, changeSection } = useActiveSection();
-  const [activeController, setActiveController] = useState([...endpointData.map((_, index) => index)]);
+  const { endpointData } = useEndpointData()
+  const { activeSection, changeSection } = useActiveSection()
+  const [activeController, setActiveController] = useState([...endpointData.map((_, index) => index)])
 
   const onClickController = (index: number) => {
     setActiveController((prev) => {
       if (prev.includes(index)) {
-        return prev.filter((endpointIndex) => endpointIndex !== index);
+        return prev.filter((endpointIndex) => endpointIndex !== index)
       } else {
-        return [...activeController, index];
+        return [...activeController, index]
       }
-    });
-  };
+    })
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -32,7 +32,7 @@ export function SidebarEndpointList() {
                 {data.endpoints.map((endpoint) => (
                   <EndpointButton
                     key={endpoint.name}
-                    href={data.basePath + "#" + endpoint.name}
+                    href={data.basePath + '#' + endpoint.name}
                     active={endpoint.name === activeSection}
                     onClick={() => changeSection(endpoint.name)}
                   >
@@ -42,8 +42,8 @@ export function SidebarEndpointList() {
               </div>
             )}
           </div>
-        );
+        )
       })}
     </div>
-  );
+  )
 }

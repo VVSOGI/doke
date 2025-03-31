@@ -1,14 +1,14 @@
-import { AnchorHTMLAttributes } from "react";
-import Link from "next/link";
+import { AnchorHTMLAttributes } from 'react'
+import Link from 'next/link'
 
 interface Props extends AnchorHTMLAttributes<HTMLAnchorElement> {
-  href: string;
-  active: boolean;
-  children: React.ReactNode;
+  href: string
+  active: boolean
+  children: React.ReactNode
 }
 
 export function EndpointButton({ href, active, children, ...props }: Props) {
-  const activeStyles = active ? "text-blue-100" : "text-black";
+  const activeStyles = active ? 'text-blue-100' : 'text-black'
 
   return (
     <Link
@@ -23,5 +23,5 @@ export function EndpointButton({ href, active, children, ...props }: Props) {
     >
       {children}
     </Link>
-  );
+  )
 }

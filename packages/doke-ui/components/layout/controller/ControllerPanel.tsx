@@ -1,20 +1,20 @@
-"use client";
+'use client'
 
-import React, { useRef, useState } from "react";
-import { useScroll } from "@/hooks";
-import { ExecuteCommandProvider } from "@/contexts";
-import { ControllerEndpointTitle, ControllerProperties, ControllerResponseExample, ExecutePanel } from "@/components";
-import { Controller, Endpoint, Project } from "@/lib/types";
+import React, { useRef, useState } from 'react'
+import { useScroll } from '@/hooks'
+import { ExecuteCommandProvider } from '@/contexts'
+import { ControllerEndpointTitle, ControllerProperties, ControllerResponseExample, ExecutePanel } from '@/components'
+import { Controller, Endpoint, Project } from '@/lib/types'
 
 interface Props {
-  projectData: Project;
-  controllerData: Controller;
+  projectData: Project
+  controllerData: Controller
 }
 
 export function ControllerPanel({ projectData, controllerData }: Props) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [selected, setSelected] = useState<Endpoint | null>(null);
-  const { isScrolling } = useScroll({ containerRef });
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [selected, setSelected] = useState<Endpoint | null>(null)
+  const { isScrolling } = useScroll({ containerRef })
 
   return (
     <div className="relative h-screen flex">
@@ -32,14 +32,9 @@ export function ControllerPanel({ projectData, controllerData }: Props) {
           </div>
         ))}
       </div>
-      <ExecuteCommandProvider
-        projectData={projectData}
-        controllerData={controllerData}
-        selected={selected}
-        setSelected={setSelected}
-      >
+      <ExecuteCommandProvider projectData={projectData} controllerData={controllerData} selected={selected} setSelected={setSelected}>
         <ExecutePanel />
       </ExecuteCommandProvider>
     </div>
-  );
+  )
 }

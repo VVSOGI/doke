@@ -1,9 +1,9 @@
-import type { Config } from "tailwindcss";
-import { PluginAPI } from "tailwindcss/types/config";
-import { colors, layout, typography } from "./lib/design";
+import type { Config } from 'tailwindcss'
+import { PluginAPI } from 'tailwindcss/types/config'
+import { colors, layout, typography } from './lib/design'
 
 export default {
-  content: ["./components/**/*.{js,ts,jsx,tsx,mdx}", "./app/**/*.{js,ts,jsx,tsx,mdx}"],
+  content: ['./components/**/*.{js,ts,jsx,tsx,mdx}', './app/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     colors,
     spacing: layout.spacing,
@@ -18,13 +18,13 @@ export default {
 
       height: layout.height,
       minHeight: layout.height,
-      maxHeight: layout.height,
-    },
+      maxHeight: layout.height
+    }
   },
   plugins: [
     function ({ addVariant }: PluginAPI) {
-      addVariant("child", "& > *");
-      addVariant("child-hover", "& > *:hover");
-    },
-  ],
-} satisfies Config;
+      addVariant('child', '& > *')
+      addVariant('child-hover', '& > *:hover')
+    }
+  ]
+} satisfies Config
