@@ -6,13 +6,6 @@ const program = new Command()
 program.name('doke-cli').version('1.0.0', '-v, --version').description('Create relative doke just in time')
 
 program
-  .command('check-docker')
-  .description('Docker 설치 및 실행 상태 확인')
-  .action(async () => {
-    console.log(chalk.blue('Docker 환경 확인 중...'))
-  })
-
-program
   .command('init')
   .description('프로젝트 초기화 및 Docker 환경 확인')
   .action(async () => {
