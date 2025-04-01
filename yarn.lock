@@ -1304,6 +1304,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/prompts@npm:^2.4.9":
+  version: 2.4.9
+  resolution: "@types/prompts@npm:2.4.9"
+  dependencies:
+    "@types/node": "npm:*"
+    kleur: "npm:^3.0.3"
+  checksum: 10c0/22fe0da6807681c85e88ba283184f4be4c8a95c744ea12a638865c98c4e0c22e7f733542f6b0f1fbca02245cdc3fe84feacf9c9adf4ddd8bc98a337fd679d8d2
+  languageName: node
+  linkType: hard
+
 "@types/reflect-metadata@npm:^0.1.0":
   version: 0.1.0
   resolution: "@types/reflect-metadata@npm:0.1.0"
@@ -2301,6 +2311,7 @@ __metadata:
   resolution: "doke-cli@workspace:packages/doke-cli"
   dependencies:
     "@types/node": "npm:^22.13.14"
+    "@types/prompts": "npm:^2.4.9"
     chalk: "npm:^4.1.2"
     commander: "npm:^4.1.1"
     cross-env: "npm:^7.0.3"
