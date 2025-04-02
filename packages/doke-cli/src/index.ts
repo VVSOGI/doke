@@ -1,6 +1,6 @@
-import { Command } from 'commander'
 import chalk from 'chalk'
-import prompts from 'prompts'
+import { Command } from 'commander'
+import { GitCommand, SelectCommand } from './utils'
 
 const program = new Command()
 
@@ -10,37 +10,17 @@ program
   .command('create ui')
   .description('Create doke ui just-in-time')
   .action(async () => {
-    console.log(chalk.blue('doke ui를 만드는 중 입니다.'))
-    const environment = await selectEnvironment()
+    console.log(chalk.blue('Create doke ui'))
+    const environment = await SelectCommand.chooseEnvironment()
+    GitCommand.cloneUIRepository()
 
     if (environment === 'local') {
-      console.log(chalk.blue('로컬 환경으로 설정됩니다.'))
+      console.log(chalk.blue('Set to local environment.'))
     } else {
-      console.log(chalk.blue('도커 환경으로 설정됩니다.'))
+      console.log(chalk.blue('Set to docker environment.'))
     }
 
     console.log(chalk.green('✅ doke ui가. /path/you/want 에 생성되었습니다.'))
   })
 
 program.parse(process.argv)
-
-export type Environment = 'local' | 'docker'
-
-export async function selectEnvironment(): Promise<Environment> {
-  const response = await prompts({
-    type: 'select',
-    name: 'environment',
-    message: 'Which environment do you want to run your project?',
-    choices: [
-      { title: 'Create local environment', value: 'local' },
-      { title: 'Create docker environment', value: 'docker' }
-    ],
-    initial: 0
-  })
-
-  if (response.environment === undefined) {
-    process.exit(1)
-  }
-
-  return response.environment
-}
