@@ -1,1 +1,0 @@
-self.__NEXT_FONT_MANIFEST='{"pages":{},"app":{"/Users/benny/Desktop/projects/doke/packages/doke-ui/app/layout":["static/media/c4250770ab8708b6-s.p.woff2"],"/Users/benny/Desktop/projects/doke/packages/doke-ui/app/[controller]/page":["static/media/c4250770ab8708b6-s.p.woff2"]},"appUsingSizeAdjust":true,"pagesUsingSizeAdjust":false}';
