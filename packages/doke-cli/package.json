@@ -23,6 +23,7 @@
   ],
   "bin": "./dist/index.js",
   "scripts": {
+    "start": "yarn build && ts-node ./dist/index.js",
     "test": "cross-env FORCE_COLOR=true jest",
     "build": "tsc"
   },
@@ -43,6 +44,7 @@
     "validate-npm-package-name": "^3.0.0"
   },
   "devDependencies": {
+    "@types/cross-spawn": "^6.0.6",
     "cross-env": "^7.0.3",
     "eslint": "8.57.0",
     "eslint-config-prettier": "9.1.0",
