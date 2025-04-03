@@ -1,6 +1,7 @@
 import chalk from 'chalk'
+import path from 'path'
 import { Command } from 'commander'
-import { GitRepositorySetup, SelectCommand } from './modules'
+import { DeploymentPrepare, GitRepositorySetup, PackageBuildManager, SelectCommand } from './modules'
 
 const program = new Command()
 
@@ -11,9 +12,24 @@ program
   .description('Create doke ui just-in-time')
   .action(async () => {
     console.log(chalk.blue('Create doke ui'))
+    const targetDirectory = path.join(process.cwd(), 'doke-ui')
     const environment = await SelectCommand.chooseEnvironment()
-    const gitCommand = new GitRepositorySetup()
-    gitCommand.cloneUIRepository()
+    const gitRepositorySetup = new GitRepositorySetup(targetDirectory)
+    const packageBuildManager = new PackageBuildManager(targetDirectory)
+    const deploymentPrepare = new DeploymentPrepare(targetDirectory)
+
+    try {
+      await gitRepositorySetup.cloneUIRepository()
+      gitRepositorySetup.gitInitDelete()
+      await packageBuildManager.installPackages()
+      await packageBuildManager.build()
+      await deploymentPrepare.prepareStandalone()
+
+      gitRepositorySetup.gitIntialize()
+    } catch (error: any) {
+      console.error(chalk.red(`Error: ${error.message}`))
+      process.exit(1)
+    }
 
     if (environment === 'local') {
       console.log(chalk.blue('Set to local environment.'))
