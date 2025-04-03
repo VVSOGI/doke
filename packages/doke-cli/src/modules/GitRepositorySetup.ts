@@ -7,15 +7,16 @@ import { CommandExecutor } from '../common'
 export class GitRepositorySetup {
   private REPO_URL: string = 'https://github.com/VVSOGI/doke'
   private FOLDER_PATH: string = '/packages/doke-ui'
-  private TARGET_DIR: string = 'doke-ui'
+  private targetDirectory: string
   private commandExecuter: CommandExecutor
 
-  constructor() {
+  constructor(targetDirecotry: string) {
     if (!this.checkGitExists()) {
       console.error(chalk.red('Git is not installed. Please install Git and try again.'))
       process.exit(1)
     }
     this.commandExecuter = new CommandExecutor()
+    this.targetDirectory = targetDirecotry
   }
 
   private checkGitExists = (): boolean => {
@@ -27,117 +28,60 @@ export class GitRepositorySetup {
     }
   }
 
+  public gitIntialize = () => {
+    if (!this.commandExecuter.runCommand('git', ['init'], this.targetDirectory)) {
+      throw new Error('Failed to initialize a new Git repository')
+    }
+  }
+
+  public gitInitDelete = () => {
+    const gitDir = path.join(this.targetDirectory, '.git')
+    if (fs.existsSync(gitDir)) {
+      fs.removeSync(gitDir)
+    }
+  }
+
   public cloneUIRepository = async () => {
-    try {
-      const targetDirectory = path.join(process.cwd(), this.TARGET_DIR)
+    if (fs.existsSync(this.targetDirectory)) {
+      console.log(chalk.yellow(`Target directory ${this.targetDirectory} already exists. Removing...`))
+      fs.removeSync(this.targetDirectory)
+    }
 
-      if (fs.existsSync(targetDirectory)) {
-        console.log(chalk.yellow(`Target directory ${this.TARGET_DIR} already exists. Removing...`))
-        fs.removeSync(targetDirectory)
-      }
+    fs.ensureDirSync(this.targetDirectory)
 
-      fs.ensureDirSync(targetDirectory)
-      console.log(chalk.blue(`Cloning folder ${this.FOLDER_PATH} from ${this.REPO_URL}`))
+    console.log(chalk.blue(`Cloning folder ${this.FOLDER_PATH} from ${this.REPO_URL}`))
+    this.gitIntialize()
 
-      if (!this.commandExecuter.runCommand('git', ['init'], targetDirectory)) {
-        throw new Error('Failed to initialize git repository')
-      }
+    if (!this.commandExecuter.runCommand('git', ['remote', 'add', 'origin', this.REPO_URL], this.targetDirectory)) {
+      throw new Error('Failed to add remote origin')
+    }
 
-      if (!this.commandExecuter.runCommand('git', ['remote', 'add', 'origin', this.REPO_URL], targetDirectory)) {
-        throw new Error('Failed to add remote origin')
-      }
+    if (!this.commandExecuter.runCommand('git', ['checkout', '-b', 'main'], this.targetDirectory)) {
+      throw new Error('Failed to change branch')
+    }
 
-      if (!this.commandExecuter.runCommand('git', ['checkout', '-b', 'main'], targetDirectory)) {
-        throw new Error('Failed to change branch')
-      }
+    if (!this.commandExecuter.runCommand('git', ['config', 'core.sparseCheckout', 'true'], this.targetDirectory)) {
+      throw new Error('Failed to enable sparse checkout')
+    }
+    const sparseCheckoutDir = path.join(this.targetDirectory, '.git', 'info')
+    fs.writeFileSync(path.join(this.targetDirectory, '.git', 'info', 'sparse-checkout'), this.targetDirectory)
+    fs.writeFileSync(path.join(sparseCheckoutDir, 'sparse-checkout'), this.FOLDER_PATH)
 
-      if (!this.commandExecuter.runCommand('git', ['config', 'core.sparseCheckout', 'true'], targetDirectory)) {
-        throw new Error('Failed to enable sparse checkout')
-      }
+    if (!this.commandExecuter.runCommand('git', ['pull', 'origin', 'main'], this.targetDirectory)) {
+      throw new Error('Failed to pull from repository')
+    }
 
-      fs.writeFileSync(path.join(targetDirectory, '.git', 'info', 'sparse-checkout'), this.TARGET_DIR)
+    const packagesPath = path.join(this.targetDirectory, this.FOLDER_PATH)
+    if (fs.existsSync(packagesPath)) {
+      const files = fs.readdirSync(packagesPath)
 
-      if (!this.commandExecuter.runCommand('git', ['pull', 'origin', 'main'], targetDirectory)) {
-        throw new Error('Failed to pull from repository')
-      }
+      files.forEach((file) => {
+        const sourcePath = path.join(packagesPath, file)
+        const destPath = path.join(this.targetDirectory, file)
+        fs.moveSync(sourcePath, destPath, { overwrite: true })
+      })
 
-      const packagesPath = path.join(targetDirectory, this.FOLDER_PATH)
-      if (fs.existsSync(packagesPath)) {
-        const files = fs.readdirSync(packagesPath)
-
-        files.forEach((file) => {
-          const sourcePath = path.join(packagesPath, file)
-          const destPath = path.join(targetDirectory, file)
-          fs.moveSync(sourcePath, destPath, { overwrite: true })
-        })
-
-        fs.removeSync(path.join(targetDirectory, 'packages'))
-      }
-
-      const gitDir = path.join(targetDirectory, '.git')
-      if (fs.existsSync(gitDir)) {
-        fs.removeSync(gitDir)
-      }
-
-      console.log(chalk.blue(`Install packages that need doke-ui`))
-
-      if (!this.commandExecuter.runCommand('yarn', ['install'], targetDirectory)) {
-        throw new Error('Failed to install dependencies')
-      }
-
-      console.log(chalk.blue(`Build installed files`))
-      if (!this.commandExecuter.runCommand('yarn', ['build'], targetDirectory)) {
-        throw new Error('Failed to build the package')
-      }
-
-      const items = await fs.readdir(targetDirectory)
-      const excludes = ['.next']
-
-      for (const item of items) {
-        if (excludes.includes(item)) {
-          continue
-        }
-
-        const itemPath = path.join(targetDirectory, item)
-        await fs.remove(itemPath)
-      }
-
-      const nextBackupPath = path.join(targetDirectory, '.next_original')
-      if (fs.existsSync(path.join(targetDirectory, '.next'))) {
-        await fs.move(path.join(targetDirectory, '.next'), nextBackupPath)
-      }
-
-      const standalonePath = path.join(nextBackupPath, 'standalone')
-
-      if (!fs.existsSync(standalonePath)) {
-        throw new Error('.next/standalone directory not found.')
-      }
-
-      const standaloneFiles = await fs.readdir(standalonePath)
-      for (const file of standaloneFiles) {
-        const sourcePath = path.join(standalonePath, file)
-        const destPath = path.join(targetDirectory, file)
-
-        if (fs.existsSync(destPath)) {
-          await fs.remove(destPath)
-        }
-
-        await fs.copy(sourcePath, destPath)
-      }
-
-      if (fs.existsSync(nextBackupPath)) {
-        const staticFiles = path.join(nextBackupPath, 'static')
-        const dest = path.join(targetDirectory, '.next', 'static')
-        await fs.move(staticFiles, dest)
-        await fs.remove(nextBackupPath)
-      }
-
-      if (!this.commandExecuter.runCommand('git', ['init'], targetDirectory)) {
-        throw new Error('Failed to initialize a new Git repository')
-      }
-    } catch (error: any) {
-      console.error(chalk.red(`Error: ${error.message}`))
-      process.exit(1)
+      fs.removeSync(path.join(this.targetDirectory, 'packages'))
     }
   }
 }
