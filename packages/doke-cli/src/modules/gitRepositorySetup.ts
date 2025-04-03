@@ -2,17 +2,20 @@ import chalk from 'chalk'
 import spawn from 'cross-spawn'
 import path from 'path'
 import fs from 'fs-extra'
+import { CommandExecutor } from '../common'
 
 export class GitRepositorySetup {
   private REPO_URL: string = 'https://github.com/VVSOGI/doke'
   private FOLDER_PATH: string = '/packages/doke-ui'
   private TARGET_DIR: string = 'doke-ui'
+  private commandExecuter: CommandExecutor
 
   constructor() {
     if (!this.checkGitExists()) {
       console.error(chalk.red('Git is not installed. Please install Git and try again.'))
       process.exit(1)
     }
+    this.commandExecuter = new CommandExecutor()
   }
 
   private checkGitExists = (): boolean => {
@@ -22,11 +25,6 @@ export class GitRepositorySetup {
     } catch (error) {
       return false
     }
-  }
-
-  private runCommand = (command: string, args: string[], cwd: string): boolean => {
-    const result = spawn.sync(command, args, { cwd: cwd, stdio: 'ignore' })
-    return result.status === 0
   }
 
   public cloneUIRepository = async () => {
@@ -41,25 +39,25 @@ export class GitRepositorySetup {
       fs.ensureDirSync(targetDirectory)
       console.log(chalk.blue(`Cloning folder ${this.FOLDER_PATH} from ${this.REPO_URL}`))
 
-      if (!this.runCommand('git', ['init'], targetDirectory)) {
+      if (!this.commandExecuter.runCommand('git', ['init'], targetDirectory)) {
         throw new Error('Failed to initialize git repository')
       }
 
-      if (!this.runCommand('git', ['remote', 'add', 'origin', this.REPO_URL], targetDirectory)) {
+      if (!this.commandExecuter.runCommand('git', ['remote', 'add', 'origin', this.REPO_URL], targetDirectory)) {
         throw new Error('Failed to add remote origin')
       }
 
-      if (!this.runCommand('git', ['checkout', '-b', 'main'], targetDirectory)) {
+      if (!this.commandExecuter.runCommand('git', ['checkout', '-b', 'main'], targetDirectory)) {
         throw new Error('Failed to change branch')
       }
 
-      if (!this.runCommand('git', ['config', 'core.sparseCheckout', 'true'], targetDirectory)) {
+      if (!this.commandExecuter.runCommand('git', ['config', 'core.sparseCheckout', 'true'], targetDirectory)) {
         throw new Error('Failed to enable sparse checkout')
       }
 
       fs.writeFileSync(path.join(targetDirectory, '.git', 'info', 'sparse-checkout'), this.TARGET_DIR)
 
-      if (!this.runCommand('git', ['pull', 'origin', 'main'], targetDirectory)) {
+      if (!this.commandExecuter.runCommand('git', ['pull', 'origin', 'main'], targetDirectory)) {
         throw new Error('Failed to pull from repository')
       }
 
@@ -83,12 +81,12 @@ export class GitRepositorySetup {
 
       console.log(chalk.blue(`Install packages that need doke-ui`))
 
-      if (!this.runCommand('yarn', ['install'], targetDirectory)) {
+      if (!this.commandExecuter.runCommand('yarn', ['install'], targetDirectory)) {
         throw new Error('Failed to install dependencies')
       }
 
       console.log(chalk.blue(`Build installed files`))
-      if (!this.runCommand('yarn', ['build'], targetDirectory)) {
+      if (!this.commandExecuter.runCommand('yarn', ['build'], targetDirectory)) {
         throw new Error('Failed to build the package')
       }
 
@@ -134,7 +132,7 @@ export class GitRepositorySetup {
         await fs.remove(nextBackupPath)
       }
 
-      if (!this.runCommand('git', ['init'], targetDirectory)) {
+      if (!this.commandExecuter.runCommand('git', ['init'], targetDirectory)) {
         throw new Error('Failed to initialize a new Git repository')
       }
     } catch (error: any) {
