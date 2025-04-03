@@ -2,6 +2,7 @@ import chalk from 'chalk'
 import path from 'path'
 import { Command } from 'commander'
 import { DeploymentPrepare, GitRepositorySetup, PackageBuildManager, SelectCommand } from './modules'
+import { CONSTANTS } from './constants'
 
 const program = new Command()
 
@@ -12,7 +13,7 @@ program
   .description('Create doke ui just-in-time')
   .action(async () => {
     console.log(chalk.blue('Create doke ui'))
-    const targetDirectory = path.join(process.cwd(), 'doke-ui')
+    const targetDirectory = path.join(process.cwd(), CONSTANTS.DIRECTORY.TARGET)
     const environment = await SelectCommand.chooseEnvironment()
     const gitRepositorySetup = new GitRepositorySetup(targetDirectory)
     const packageBuildManager = new PackageBuildManager(targetDirectory)

@@ -3,10 +3,11 @@ import spawn from 'cross-spawn'
 import path from 'path'
 import fs from 'fs-extra'
 import { CommandExecutor } from '../common'
+import { CONSTANTS } from '../constants'
 
 export class GitRepositorySetup {
-  private REPO_URL: string = 'https://github.com/VVSOGI/doke'
-  private FOLDER_PATH: string = '/packages/doke-ui'
+  private REPO_URL: string = CONSTANTS.GITHUB.REPO_URL
+  private FOLDER_PATH: string = CONSTANTS.GITHUB.UI_PATH
   private targetDirectory: string
   private commandExecuter: CommandExecutor
 
