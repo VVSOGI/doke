@@ -1,6 +1,6 @@
 import chalk from 'chalk'
 import { Command } from 'commander'
-import { GitCommand, SelectCommand } from './utils'
+import { GitRepositorySetup, SelectCommand } from './modules'
 
 const program = new Command()
 
@@ -12,7 +12,7 @@ program
   .action(async () => {
     console.log(chalk.blue('Create doke ui'))
     const environment = await SelectCommand.chooseEnvironment()
-    const gitCommand = new GitCommand()
+    const gitCommand = new GitRepositorySetup()
     gitCommand.cloneUIRepository()
 
     if (environment === 'local') {
