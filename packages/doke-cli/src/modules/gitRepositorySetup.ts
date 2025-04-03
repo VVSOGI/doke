@@ -3,7 +3,7 @@ import spawn from 'cross-spawn'
 import path from 'path'
 import fs from 'fs-extra'
 
-export class GitCommand {
+export class GitRepositorySetup {
   private REPO_URL: string = 'https://github.com/VVSOGI/doke'
   private FOLDER_PATH: string = '/packages/doke-ui'
   private TARGET_DIR: string = 'doke-ui'
@@ -87,9 +87,51 @@ export class GitCommand {
         throw new Error('Failed to install dependencies')
       }
 
-      console.log(chalk.blue(`Build complete files`))
+      console.log(chalk.blue(`Build installed files`))
       if (!this.runCommand('yarn', ['build'], targetDirectory)) {
         throw new Error('Failed to build the package')
+      }
+
+      const items = await fs.readdir(targetDirectory)
+      const excludes = ['.next']
+
+      for (const item of items) {
+        if (excludes.includes(item)) {
+          continue
+        }
+
+        const itemPath = path.join(targetDirectory, item)
+        await fs.remove(itemPath)
+      }
+
+      const nextBackupPath = path.join(targetDirectory, '.next_original')
+      if (fs.existsSync(path.join(targetDirectory, '.next'))) {
+        await fs.move(path.join(targetDirectory, '.next'), nextBackupPath)
+      }
+
+      const standalonePath = path.join(nextBackupPath, 'standalone')
+
+      if (!fs.existsSync(standalonePath)) {
+        throw new Error('.next/standalone directory not found.')
+      }
+
+      const standaloneFiles = await fs.readdir(standalonePath)
+      for (const file of standaloneFiles) {
+        const sourcePath = path.join(standalonePath, file)
+        const destPath = path.join(targetDirectory, file)
+
+        if (fs.existsSync(destPath)) {
+          await fs.remove(destPath)
+        }
+
+        await fs.copy(sourcePath, destPath)
+      }
+
+      if (fs.existsSync(nextBackupPath)) {
+        const staticFiles = path.join(nextBackupPath, 'static')
+        const dest = path.join(targetDirectory, '.next', 'static')
+        await fs.move(staticFiles, dest)
+        await fs.remove(nextBackupPath)
       }
 
       if (!this.runCommand('git', ['init'], targetDirectory)) {
