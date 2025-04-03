@@ -3,7 +3,7 @@ import spawn from 'cross-spawn'
 import path from 'path'
 import fs from 'fs-extra'
 
-export class GitCommand {
+export class GitRepositorySetup {
   private REPO_URL: string = 'https://github.com/VVSOGI/doke'
   private FOLDER_PATH: string = '/packages/doke-ui'
   private TARGET_DIR: string = 'doke-ui'
