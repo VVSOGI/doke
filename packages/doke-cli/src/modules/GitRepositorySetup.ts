@@ -73,16 +73,14 @@ export class GitRepositorySetup {
     }
 
     const packagesPath = path.join(this.targetDirectory, this.FOLDER_PATH)
-    if (fs.existsSync(packagesPath)) {
-      const files = fs.readdirSync(packagesPath)
+    const files = fs.readdirSync(packagesPath)
 
-      files.forEach((file) => {
-        const sourcePath = path.join(packagesPath, file)
-        const destPath = path.join(this.targetDirectory, file)
-        fs.moveSync(sourcePath, destPath, { overwrite: true })
-      })
+    files.forEach((file) => {
+      const sourcePath = path.join(packagesPath, file)
+      const destPath = path.join(this.targetDirectory, file)
+      fs.moveSync(sourcePath, destPath)
+    })
 
-      fs.removeSync(path.join(this.targetDirectory, 'packages'))
-    }
+    fs.removeSync(path.join(this.targetDirectory, 'packages'))
   }
 }

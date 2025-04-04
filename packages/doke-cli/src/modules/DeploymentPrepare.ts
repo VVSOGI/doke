@@ -37,34 +37,24 @@ export class DeploymentPrepare {
       await fs.remove(itemPath)
     }
 
+    const nextOriginalPath = path.join(this.targetDirectory, '.next')
     const nextBackupPath = path.join(this.targetDirectory, '.next_original')
-    if (fs.existsSync(path.join(this.targetDirectory, '.next'))) {
-      await fs.move(path.join(this.targetDirectory, '.next'), nextBackupPath)
-    }
+    if (fs.existsSync(nextOriginalPath)) await fs.move(nextOriginalPath, nextBackupPath)
 
     const standalonePath = path.join(nextBackupPath, 'standalone')
-
-    if (!fs.existsSync(standalonePath)) {
-      throw new Error('.next/standalone directory not found.')
-    }
-
     const standaloneFiles = await fs.readdir(standalonePath)
     for (const file of standaloneFiles) {
       const sourcePath = path.join(standalonePath, file)
       const destPath = path.join(this.targetDirectory, file)
-
-      if (fs.existsSync(destPath)) {
-        await fs.remove(destPath)
-      }
-
-      await fs.copy(sourcePath, destPath)
+      if (fs.existsSync(destPath)) await fs.remove(destPath)
+      await fs.move(sourcePath, destPath)
     }
 
     if (fs.existsSync(nextBackupPath)) {
       const staticFiles = path.join(nextBackupPath, 'static')
       const dest = path.join(this.targetDirectory, '.next', 'static')
-      await fs.move(staticFiles, dest)
-      await fs.remove(nextBackupPath)
+      fs.moveSync(staticFiles, dest)
+      fs.removeSync(nextBackupPath)
     }
   }
 
