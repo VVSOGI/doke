@@ -12,6 +12,18 @@ export class DeploymentPrepare {
     this.commandExecutor = new CommandExecutor()
   }
 
+  private isDockerInstalled = () => {
+    try {
+      const isWindows = process.platform === 'win32'
+      const command = isWindows ? 'where' : 'which'
+
+      const result = this.commandExecutor.runCommand(command, ['docker'], '')
+      return result
+    } catch (error) {
+      return false
+    }
+  }
+
   public localDeployment = async () => {
     const items = await fs.readdir(this.targetDirectory)
     const excludes = ['.next']
@@ -58,6 +70,9 @@ export class DeploymentPrepare {
 
   public dockerDeployment = async () => {
     console.log(chalk.blue(`Building Docker image: doke-ui`))
+    if (!this.isDockerInstalled()) {
+      throw new Error('Docker is not installed. Please install Docker to continue.')
+    }
 
     if (!this.commandExecutor.runCommand('docker', ['build', '-t', `doke-ui`, '.'], this.targetDirectory)) {
       throw new Error('Failed to build docker images')
