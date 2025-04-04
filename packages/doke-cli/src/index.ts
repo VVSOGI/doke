@@ -23,8 +23,15 @@ program
       await gitRepositorySetup.cloneUIRepository()
       gitRepositorySetup.gitInitDelete()
       await packageBuildManager.installPackages()
-      await packageBuildManager.build()
-      await deploymentPrepare.prepareStandalone()
+
+      if (environment === 'local') {
+        await packageBuildManager.build()
+        await deploymentPrepare.localDeployment()
+        console.log(chalk.blue('Set to local environment.'))
+      } else {
+        await deploymentPrepare.dockerDeployment()
+        console.log(chalk.blue('Set to docker environment.'))
+      }
 
       gitRepositorySetup.gitIntialize()
     } catch (error: any) {
@@ -32,13 +39,7 @@ program
       process.exit(1)
     }
 
-    if (environment === 'local') {
-      console.log(chalk.blue('Set to local environment.'))
-    } else {
-      console.log(chalk.blue('Set to docker environment.'))
-    }
-
-    console.log(chalk.green('✅ doke ui가. /path/you/want 에 생성되었습니다.'))
+    console.log(chalk.green(`✅ A doke ui has been created at. ${targetDirectory}.`))
   })
 
 program.parse(process.argv)
