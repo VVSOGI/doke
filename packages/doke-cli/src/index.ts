@@ -22,18 +22,17 @@ program
     try {
       await gitRepositorySetup.cloneUIRepository()
       gitRepositorySetup.gitInitDelete()
-      await packageBuildManager.installPackages()
 
       if (environment === 'local') {
+        await packageBuildManager.installPackages()
         await packageBuildManager.build()
         await deploymentPrepare.localDeployment()
+        gitRepositorySetup.gitIntialize()
         console.log(chalk.blue('Set to local environment.'))
       } else {
         await deploymentPrepare.dockerDeployment()
         console.log(chalk.blue('Set to docker environment.'))
       }
-
-      gitRepositorySetup.gitIntialize()
     } catch (error: any) {
       console.error(chalk.red(`Error: ${error.message}`))
       process.exit(1)
