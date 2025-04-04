@@ -17,7 +17,7 @@ export class DeploymentPrepare {
       const isWindows = process.platform === 'win32'
       const command = isWindows ? 'where' : 'which'
 
-      const result = this.commandExecutor.runCommand(command, ['docker'], '')
+      const result = this.commandExecutor.runCommand(command, ['docker'], this.targetDirectory)
       return result
     } catch (error) {
       return false
@@ -74,7 +74,7 @@ export class DeploymentPrepare {
       throw new Error('Docker is not installed. Please install Docker to continue.')
     }
 
-    if (!this.commandExecutor.runCommand('docker', ['build', '-t', `doke-ui`, '.'], this.targetDirectory)) {
+    if (!this.commandExecutor.runCommand('docker', ['build', '-t', `doke-ui`, '.'], this.targetDirectory, true)) {
       throw new Error('Failed to build docker images')
     }
 
