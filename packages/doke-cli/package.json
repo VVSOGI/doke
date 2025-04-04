@@ -19,11 +19,12 @@
     "url": "https://github.com/VVSOGI/doke/issues"
   },
   "files": [
+    "dist",
     "index.ts"
   ],
   "bin": "./dist/index.js",
   "scripts": {
-    "start": "yarn build && ts-node ./dist/index.js",
+    "start": "yarn build && node ./dist/index.js",
     "test": "cross-env FORCE_COLOR=true jest",
     "build": "tsc"
   },
