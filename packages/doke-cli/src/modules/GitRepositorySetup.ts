@@ -9,14 +9,14 @@ export class GitRepositorySetup {
   private REPO_URL: string = CONSTANTS.GITHUB.REPO_URL
   private FOLDER_PATH: string = CONSTANTS.GITHUB.UI_PATH
   private targetDirectory: string
-  private commandExecuter: CommandExecutor
+  private commandExecutor: CommandExecutor
 
   constructor(targetDirecotry: string) {
     if (!this.checkGitExists()) {
       console.error(chalk.red('Git is not installed. Please install Git and try again.'))
       process.exit(1)
     }
-    this.commandExecuter = new CommandExecutor()
+    this.commandExecutor = new CommandExecutor()
     this.targetDirectory = targetDirecotry
   }
 
@@ -30,7 +30,7 @@ export class GitRepositorySetup {
   }
 
   public gitIntialize = () => {
-    if (!this.commandExecuter.runCommand('git', ['init'], this.targetDirectory)) {
+    if (!this.commandExecutor.runCommand('git', ['init'], this.targetDirectory)) {
       throw new Error('Failed to initialize a new Git repository')
     }
   }
@@ -53,22 +53,22 @@ export class GitRepositorySetup {
     console.log(chalk.blue(`Cloning folder ${this.FOLDER_PATH} from ${this.REPO_URL}`))
     this.gitIntialize()
 
-    if (!this.commandExecuter.runCommand('git', ['remote', 'add', 'origin', this.REPO_URL], this.targetDirectory)) {
+    if (!this.commandExecutor.runCommand('git', ['remote', 'add', 'origin', this.REPO_URL], this.targetDirectory)) {
       throw new Error('Failed to add remote origin')
     }
 
-    if (!this.commandExecuter.runCommand('git', ['checkout', '-b', 'main'], this.targetDirectory)) {
+    if (!this.commandExecutor.runCommand('git', ['checkout', '-b', 'main'], this.targetDirectory)) {
       throw new Error('Failed to change branch')
     }
 
-    if (!this.commandExecuter.runCommand('git', ['config', 'core.sparseCheckout', 'true'], this.targetDirectory)) {
+    if (!this.commandExecutor.runCommand('git', ['config', 'core.sparseCheckout', 'true'], this.targetDirectory)) {
       throw new Error('Failed to enable sparse checkout')
     }
     const sparseCheckoutDir = path.join(this.targetDirectory, '.git', 'info')
     fs.writeFileSync(path.join(this.targetDirectory, '.git', 'info', 'sparse-checkout'), this.targetDirectory)
     fs.writeFileSync(path.join(sparseCheckoutDir, 'sparse-checkout'), this.FOLDER_PATH)
 
-    if (!this.commandExecuter.runCommand('git', ['pull', 'origin', 'main'], this.targetDirectory)) {
+    if (!this.commandExecutor.runCommand('git', ['pull', 'origin', 'main'], this.targetDirectory)) {
       throw new Error('Failed to pull from repository')
     }
 

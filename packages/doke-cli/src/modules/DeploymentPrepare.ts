@@ -1,14 +1,18 @@
 import fs from 'fs-extra'
 import path from 'path'
+import chalk from 'chalk'
+import { CommandExecutor } from '../common'
 
 export class DeploymentPrepare {
   private targetDirectory: string
+  private commandExecutor: CommandExecutor
 
   constructor(targetDirectory: string) {
     this.targetDirectory = targetDirectory
+    this.commandExecutor = new CommandExecutor()
   }
 
-  public prepareStandalone = async () => {
+  public localDeployment = async () => {
     const items = await fs.readdir(this.targetDirectory)
     const excludes = ['.next']
 
@@ -50,5 +54,15 @@ export class DeploymentPrepare {
       await fs.move(staticFiles, dest)
       await fs.remove(nextBackupPath)
     }
+  }
+
+  public dockerDeployment = async () => {
+    console.log(chalk.blue(`Building Docker image: doke-ui`))
+
+    if (!this.commandExecutor.runCommand('docker', ['build', '-t', `doke-ui`, '.'], this.targetDirectory)) {
+      throw new Error('Failed to build docker images')
+    }
+
+    await fs.remove(this.targetDirectory)
   }
 }
