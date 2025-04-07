@@ -1,5 +1,6 @@
 import chalk from 'chalk'
 import path from 'path'
+import fs from 'fs-extra'
 import { Command } from 'commander'
 import { DeploymentPrepare, GitRepositorySetup, PackageBuildManager, SelectCommand } from './modules'
 import { CONSTANTS } from './constants'
@@ -12,6 +13,11 @@ program
   .command('create-ui')
   .description('Create doke ui just-in-time')
   .action(async () => {
+    if (!fs.existsSync('api-docs')) {
+      console.error(`Not exist api-docs folder in current path`)
+      process.exit(1)
+    }
+
     console.log(chalk.blue('Create doke ui'))
     const targetDirectory = path.join(process.cwd(), CONSTANTS.DIRECTORY.TARGET)
     const environment = await SelectCommand.chooseEnvironment()

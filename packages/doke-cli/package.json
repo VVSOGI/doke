@@ -1,6 +1,6 @@
 {
   "name": "doke-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "keywords": [
     "nextjs",
     "doke"
@@ -19,13 +19,14 @@
     "url": "https://github.com/VVSOGI/doke/issues"
   },
   "files": [
+    "dist",
     "index.ts"
   ],
   "bin": "./dist/index.js",
   "scripts": {
-    "start": "yarn build && ts-node ./dist/index.js",
+    "start": "yarn build && node ./dist/index.js",
     "test": "cross-env FORCE_COLOR=true jest",
-    "build": "tsc"
+    "build": "tsc && ts-node ./add-shabang.ts"
   },
   "dependencies": {
     "@types/fs-extra": "^11.0.4",
