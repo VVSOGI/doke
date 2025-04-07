@@ -2,6 +2,7 @@ import fs from 'fs-extra'
 import path from 'path'
 import chalk from 'chalk'
 import { CommandExecutor } from '../common'
+import { fork } from 'child_process'
 
 export class DeploymentPrepare {
   private targetDirectory: string
@@ -22,6 +23,16 @@ export class DeploymentPrepare {
     } catch (error) {
       return false
     }
+  }
+
+  public localStart = () => {
+    const target = path.join(this.targetDirectory, 'server.js')
+    fork(target, {
+      env: {
+        PORT: '3001'
+      },
+      stdio: 'inherit'
+    })
   }
 
   public localDeployment = async () => {

@@ -39,6 +39,7 @@ program
         await packageBuildManager.build()
         await deploymentPrepare.localDeployment()
         gitRepositorySetup.gitIntialize()
+        deploymentPrepare.localStart()
         console.log(chalk.blue('Set to local environment.'))
       } else {
         await deploymentPrepare.dockerDeployment()
