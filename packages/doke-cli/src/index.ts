@@ -25,8 +25,13 @@ program
     const packageBuildManager = new PackageBuildManager(targetDirectory)
     const deploymentPrepare = new DeploymentPrepare(targetDirectory)
 
+    const targetApiDocs = path.join(targetDirectory, '/api-docs')
+    const sourceApiDocs = path.join(process.cwd(), '/api-docs')
+
     try {
       await gitRepositorySetup.cloneUIRepository()
+      fs.removeSync(targetApiDocs)
+      fs.copySync(sourceApiDocs, targetApiDocs)
       gitRepositorySetup.gitInitDelete()
 
       if (environment === 'local') {
