@@ -31,7 +31,7 @@ program
     try {
       await gitRepositorySetup.cloneUIRepository()
       fs.removeSync(targetApiDocs)
-      fs.moveSync(sourceApiDocs, targetApiDocs)
+      fs.copySync(sourceApiDocs, targetApiDocs)
       gitRepositorySetup.gitInitDelete()
 
       if (environment === 'local') {
