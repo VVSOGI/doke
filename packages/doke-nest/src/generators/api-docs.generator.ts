@@ -8,9 +8,9 @@ export class ApiDocsGenerator {
   private readonly writer: DocsWriter
   private readonly controllerExtractor: ControllerExtractor
 
-  constructor(metadata: ReceivedMetadata, outputPath: string, discoveryService: DiscoveryService, targetFolder?: string) {
+  constructor(metadata: ReceivedMetadata, discoveryService: DiscoveryService, targetFolder?: string) {
     this.metadata = { ...metadata, routes: [] }
-    this.writer = new DocsWriter(new FileManager(outputPath, targetFolder))
+    this.writer = new DocsWriter(new FileManager(process.cwd(), targetFolder))
     this.controllerExtractor = new ControllerExtractor(discoveryService)
   }
 
