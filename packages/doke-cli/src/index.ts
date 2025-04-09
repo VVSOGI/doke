@@ -14,7 +14,7 @@ program
   .description('Start ui that doke api documnet')
   .action(async () => {
     if (!fs.existsSync('doke-ui')) {
-      console.error(`Not exist doke ui folder in current path`)
+      console.error(chalk.red(`Not exist doke ui folder in current path`))
       process.exit(1)
     }
     const targetDirectory = path.join(process.cwd(), CONSTANTS.DIRECTORY.TARGET)
@@ -28,7 +28,7 @@ program
   .description('generate doke ui just-in-time')
   .action(async () => {
     if (!fs.existsSync('api-docs')) {
-      console.error(`Not exist api-docs folder in current path`)
+      console.error(chalk.red(`Not exist api-docs folder in current path`))
       process.exit(1)
     }
 
