@@ -51,7 +51,7 @@ describe('Testing that ApiDocsGenerator creates json files with the correct data
     jest.spyOn(ControllerExtractor.prototype, 'extract').mockImplementation(mockControllerExtractor.extract)
     jest.spyOn(DocsWriter.prototype, 'writeDocumentation').mockImplementation(mockDocsWriter.writeDocumentation)
 
-    apiDocsGenerator = new ApiDocsGenerator(testMetadata, 'test-output-path', mockDiscoveryService)
+    apiDocsGenerator = new ApiDocsGenerator(testMetadata, mockDiscoveryService)
   })
 
   it('should generate documentation successfully', async () => {
