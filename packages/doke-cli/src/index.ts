@@ -7,18 +7,32 @@ import { CONSTANTS } from './constants'
 
 const program = new Command()
 
-program.name('doke-cli').version('1.0.0', '-v, --version').description('Create relative doke just in time')
+program.name('doke-cli').version('1.0.0', '-v, --version').description('generate relative doke just in time')
 
 program
-  .command('create-ui')
-  .description('Create doke ui just-in-time')
+  .command('start')
+  .description('Start ui that doke api documnet')
+  .action(async () => {
+    if (!fs.existsSync('doke-ui')) {
+      console.error(`Not exist doke ui folder in current path`)
+      process.exit(1)
+    }
+    const targetDirectory = path.join(process.cwd(), CONSTANTS.DIRECTORY.TARGET)
+    const deploymentPrepare = new DeploymentPrepare(targetDirectory)
+
+    deploymentPrepare.localStart()
+  })
+
+program
+  .command('generate-ui')
+  .description('generate doke ui just-in-time')
   .action(async () => {
     if (!fs.existsSync('api-docs')) {
       console.error(`Not exist api-docs folder in current path`)
       process.exit(1)
     }
 
-    console.log(chalk.blue('Create doke ui'))
+    console.log(chalk.blue('generate doke ui'))
     const targetDirectory = path.join(process.cwd(), CONSTANTS.DIRECTORY.TARGET)
     const environment = await SelectCommand.chooseEnvironment()
     const gitRepositorySetup = new GitRepositorySetup(targetDirectory)
@@ -50,7 +64,7 @@ program
       process.exit(1)
     }
 
-    console.log(chalk.green(`✅ A doke ui has been created at. ${targetDirectory}.`))
+    console.log(chalk.green(`✅ A doke ui has been generated at. ${targetDirectory}.`))
   })
 
 program.parse(process.argv)
