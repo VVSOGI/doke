@@ -9,8 +9,8 @@ export class SelectCommand {
       name: 'environment',
       message: 'Which environment do you want to run your project?',
       choices: [
-        { title: 'Create local environment', value: 'local' },
-        { title: 'Create docker environment', value: 'docker' }
+        { title: 'Generate local environment', value: 'local' },
+        { title: 'Generate docker environment', value: 'docker' }
       ],
       initial: 0
     })
