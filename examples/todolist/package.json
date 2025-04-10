@@ -22,12 +22,7 @@
     "migration:dev": "typeorm migration:run src/database/data-source.ts",
     "migration:revert": "typeorm migration:revert -d ./dist/database/data-source.js",
     "format": "prettier --write \"src/**/*.ts\"",
-    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
-    "test": "jest --watch --config ./jest.config.ts",
-    "test:verbose": "jest --watch --config --verbose ./jest.config.ts",
-    "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "prepare": "ts-patch install && typia patch"
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\""
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
@@ -40,7 +35,6 @@
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",
     "typeorm": "^0.3.20",
-    "typia": "^6.10.2",
     "uuid": "^10.0.0"
   },
   "devDependencies": {
@@ -66,7 +60,6 @@
     "ts-jest": "^29.1.0",
     "ts-loader": "^9.4.3",
     "ts-node": "^10.9.1",
-    "ts-patch": "^3.2.1",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.6.2",
     "unplugin-swc": "^1.5.1",
