@@ -1,5 +1,4 @@
 import { ObjectLiteral, Repository } from 'typeorm'
-import { jest } from '@jest/globals'
 
 export type MockType<T> = {
   [P in keyof T]?: jest.Mock<any>
