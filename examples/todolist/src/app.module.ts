@@ -1,10 +1,8 @@
 import { Module } from '@nestjs/common'
-import { CategoryModule } from './services/category/category.module'
 import { DiscoveryModule } from '@nestjs/core'
+import { CategoryModule, TodolistModule } from './services'
 
 @Module({
-  imports: [CategoryModule, DiscoveryModule],
-  controllers: [],
-  providers: []
+  imports: [CategoryModule, TodolistModule, DiscoveryModule]
 })
 export class AppModule {}
