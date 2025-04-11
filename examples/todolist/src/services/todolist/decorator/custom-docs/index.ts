@@ -1,6 +1,0 @@
-export * from './create-todolist.docs'
-export * from './get-todolist.docs'
-export * from './get-todolist-by-id.docs'
-export * from './get-todolist-by-date.docs'
-export * from './update-todolist.docs'
-export * from './update-todolist-order.docs'

@@ -1,9 +1,0 @@
-{
-  "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "prettier.requireConfig": true,
-  "eslint.nodePath": "../../.yarn/sdks",
-  "prettier.prettierPath": "../../.yarn/sdks/prettier/index.cjs",
-  "typescript.tsdk": "../../.yarn/sdks/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true
-}
