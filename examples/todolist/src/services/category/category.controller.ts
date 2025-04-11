@@ -10,31 +10,31 @@ import { DocsCreateCategory, DocsGetCategory, DocsUpdateCategory, DocsGetCategor
 export class CategoryController {
   @Post()
   @DocsCreateCategory()
-  async createCategory(): Promise<string> {
-    return ''
+  async createCategory(): Promise<object> {
+    return {}
   }
 
   @Get()
   @DocsGetCategory()
-  async getCategories(): Promise<string> {
-    return ''
+  async getCategories(): Promise<object> {
+    return {}
   }
 
   @Get(':categoryId')
   @DocsGetCategoryById()
-  async getCategoryById(): Promise<string> {
-    return ''
+  async getCategoryById(): Promise<object> {
+    return {}
   }
 
   @Patch(':categoryId')
   @DocsUpdateCategory()
-  async updateCategory(): Promise<string> {
-    return ''
+  async updateCategory(): Promise<object> {
+    return {}
   }
 
   @Delete('/soft/:categoryId')
   @DocsDeleteCategory()
-  async softDeleteCategoryById(): Promise<string> {
-    return ''
+  async softDeleteCategoryById(): Promise<object> {
+    return {}
   }
 }
