@@ -1,6 +1,6 @@
 # Doke Example - NestJS TodoList Project
 
-This example demonstrates how to integrate and use Doke documentation generator with a NestJS application. The project implements a simple TodoList API with category management functionality.
+This example project demonstrates how to use doke to simply create an api-docs and doke-ui server.
 
 ## Documentation
 

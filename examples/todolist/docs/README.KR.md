@@ -1,6 +1,6 @@
 # doke 예제 - NestJS TodoList 프로젝트
 
-이 예제는 NestJS 애플리케이션에서 doke 문서 생성기를 통합하고 사용하는 방법을 보여줍니다. 이 프로젝트는 카테고리 관리 기능이 있는 간단한 TodoList API를 구현합니다.
+이 예제 프로젝트는 doke를 사용해서 api-docs와 doke-ui 서버를 간단하게 생성하는 방법을 보여줍니다.
 
 ## 빠른 설정 가이드
 
