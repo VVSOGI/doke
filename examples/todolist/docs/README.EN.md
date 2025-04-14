@@ -1,12 +1,12 @@
-안녕하세요? doke에 대해서 간단하게 사용법을 알아보는 파트입니다. 현재 예시 프로젝트는 Nest js로 작성되어 있으며, package.json에 scripts 작성이 완료되어 있는 상태입니다.
+Hello, this is a simple tutorial to learn how to use doke. The current example project is written in Nest js, with scripts written in package.json.
 
-### 사용법
+### How to use
 
-doke-ui를 사용하기 위해서 현재 루트에 api-docs라는 폴더를 생성해야합니다. 이 폴더는 doke 설정이 완벽하게 되어있다면 yarn start:doke-build시에 자동으로 생성하도록 되어있습니다.
+To use doke-ui, you need to create a folder called api-docs in your current root. This folder is supposed to be created automatically at yarn start:doke-build if your doke setup is perfect.
 
-해당 예시 프로젝트와 동일하게 환경을 구성하기 위해서 configuration 설정이 필요합니다.
+We need to configure our environment to be the same as the example project.
 
-첫 번째 설정으로 [app.module.ts](https://github.com/VVSOGI/doke/blob/main/examples/todolist/src/app.module.ts) 에 imports 부분에 DiscoveryModule가 있습니다.
+The first setting is [app.module.ts](https://github.com/VVSOGI/doke/blob/main/examples/todolist/src/app.module.ts) with a DiscoveryModule in the imports section.
 
 ```typescript
 import { Module } from '@nestjs/common'
@@ -19,13 +19,13 @@ import { CategoryModule, TodolistModule } from './services'
 export class AppModule {}
 ```
 
-DiscoveryModule은 controller의 정보를 가져오기 위해서 필요한 모듈입니다.
+DiscoveryModule is the module we need to get information from the controller.
 
-두 번째로 src/utils/generate-docs 입니다. 해당 폴더 위치는 아키텍처 스타일에 맞춰서 변경이 가능합니다. 기본적으로 utils에 추가하는 것을 추천합니다.
+The second is src/utils/generate-docs. The location of this folder can be changed to suit your architecture style. I recommend adding it to utils by default:
 
-const info: ReceivedMetadata = {} 에는 serverUrl이 들어가는데 nest js 서버의 주소를 넣어주면 됩니다. 이 값을 통해서 클라이언트는 서버에 api 요청을 보낼 수 있습니다.
+const info: ReceivedMetadata = {} contains serverUrl, where you can put the address of your nest js server. This value allows the client to send API requests to the server.
 
-아래와 같이 구성하면 두 번째 준비는 완료되었습니다.
+Configure it like this and you're ready for the second one.
 
 ```typescript
 import { DiscoveryService, NestFactory } from '@nestjs/core'
@@ -57,26 +57,26 @@ generateDocs()
   })
 ```
 
-세 번째 설정으로 각 컨트롤러에 doke의 커스텀 데코레이터를 연결해야합니다.
+As a third setup, we need to attach DOKE's custom decorator to each controller.
 
 [Category Controller](https://github.com/VVSOGI/doke/blob/main/examples/todolist/src/services/category/category.controller.ts)
 
-해당 카테코리 컨트롤러에 DocsCreateCategory, DocsGetCategory... 등등 해당 컨트롤러를 설명하는 커스텀 데코레이터가 존재합니다.
+Each category controller has a custom decorator that describes that controller, such as DocsCreateCategory, DocsGetCategory... and so on, there will be a custom decorator describing that controller.
 
 ```typescript
 import { ApiDocsEndpoint, EndpointDecoratorMetadata } from 'doke-nest'
 
 export const DocsCreateCategory = () => {
   /**
-     * 해당 컨트롤러에서 필요로하는 body, query, params, headers를 타입으로 명시해줍니다.
-     * 이곳에서 명시하는 타입은 해당 request parameter의 properties에 해당합니다.
-     * 이 properties는 아래와 같이 구성되어있습니다.
-     * key: {
-            type: 'string',
-            description: 'Title of Category',
-            required: true
-        }
-     */
+    * Specify the types of body, query, params, and headers required by that controller.
+    * The types we specify here correspond to the properties of the request parameter.
+    * These properties are organized as follows
+    * key: {
+        type: 'string',
+        description: 'Title of Category',
+        required: true
+      }
+  */
   const metadata: EndpointDecoratorMetadata<{
     body: 'title'
     headers: 'Content-Type' | 'Authorization'
@@ -122,5 +122,5 @@ export const DocsCreateCategory = () => {
 }
 ```
 
-다음의 세 가지 설정을 마쳤다면 이제 doke-nest를 사용할 준비가 완료 된 것입니다.
-이제 터미널에 yarn start:doke-build (package.json 참고)를 입력하면 cli-command를 통해서 자동으로 설치하기 시작합니다.
+After these three settings, you should be ready to use doke-nest.
+Now type yarn start:doke-build (see package.json) in the terminal and it will automatically start installing via cli-command.
