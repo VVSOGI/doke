@@ -1,6 +1,7 @@
 {
   "name": "doke",
   "version": "1.0.0",
+  "description": "API documentation generator for NestJS applications with beautiful UI 🎨",
   "repository": "https://github.com/VVSOGI/doke.git",
   "author": "benny <vvsogi@gmail.com>",
   "license": "MIT",
