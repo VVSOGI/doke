@@ -36,7 +36,7 @@ async function generateDocs() {
   const app: any = await NestFactory.create(AppModule)
   const info: ReceivedMetadata = {
     name: 'free-todolist',
-    description: `A full-stack todo list application designed for practice, focusing on improving architectural skills and testing various design patterns (container-presenter, layered ...) in both frontend and backend development.`,
+    description: `...`,
     version: '1.0.0',
     serverUrl: 'http://localhost:3000'
   }
@@ -82,10 +82,7 @@ export const DocsCreateCategory = () => {
     headers: 'Content-Type' | 'Authorization'
     response: 'id' | 'title' | 'createdAt' | 'updatedAt' | 'deleted'
   }> = {
-    description: `This endpoint creates a new category for organizing todolist items within the system.
-  It requires a title parameter which specifies the name of the category to be created.
-  The response returns the complete category object with its generated unique identifier, title, timestamps, and deletion status.
-  This endpoint is the first step in establishing a hierarchical organization system for todolists, allowing for logical grouping of related tasks.`,
+    description: `...`,
     request: {
       body: {
         properties: {
