@@ -19,37 +19,37 @@ export class TodolistController {
 
   @Post()
   @DocsCreateTodolist()
-  async createTodolist(): Promise<string> {
-    return ''
+  async createTodolist(): Promise<object> {
+    return {}
   }
 
   @Get()
   @DocsGetTodolist()
-  async getTodolists(): Promise<string> {
-    return ''
+  async getTodolists(): Promise<object> {
+    return {}
   }
 
   @Get(':categoryId')
   @DocsGetTodolistById()
-  async getTodolistsByCategoryId(): Promise<string> {
-    return ''
+  async getTodolistsByCategoryId(): Promise<object> {
+    return {}
   }
 
   @Get('/dates/:categoryId')
   @DocsGetTodolistByDate()
-  async getTodolistsByDate(@Query('checked') checked: string): Promise<string> {
-    return checked
+  async getTodolistsByDate(@Query('checked') checked: string): Promise<object> {
+    return { checked }
   }
 
   @Patch()
   @DocsUpdateTodolist()
-  async updateTodo(): Promise<string> {
-    return ''
+  async updateTodo(): Promise<object> {
+    return {}
   }
 
   @Patch('/order')
   @DocsUpdateTodolistOrder()
-  async updateTodoOrder(): Promise<string> {
-    return ''
+  async updateTodoOrder(): Promise<object> {
+    return {}
   }
 }

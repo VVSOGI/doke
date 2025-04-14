@@ -12,6 +12,8 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
+    "start:doke": "npx doke-cli start",
+    "start:doke-build": "yarn start:generate-docs && npx doke-cli generate-ui",
     "start:generate-docs": "ts-node -r tsconfig-paths/register ./src/utils/generate-docs.ts",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
