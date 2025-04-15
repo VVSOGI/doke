@@ -96,4 +96,4 @@ doke-cli start
 
 ## 라이센스
 
-MIT 라이센스 - 자세한 내용은 [LICENSE](../LICENSE) 파일을 참조하세요.
+MIT 라이센스 - 자세한 내용은 [LICENSE](../../../LICENSE) 파일을 참조하세요.

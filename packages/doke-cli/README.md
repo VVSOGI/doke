@@ -96,4 +96,4 @@ This command starts the doke UI server, assuming a `doke-ui` folder exists in yo
 
 ## License
 
-MIT License - See the [LICENSE](../LICENSE) file for details.
+MIT License - See the [LICENSE](../../LICENSE) file for details.
