@@ -2,8 +2,11 @@
   "name": "doke-cli",
   "version": "1.0.6",
   "keywords": [
+    "doke",
     "nextjs",
-    "doke"
+    "nestjs",
+    "api-docs",
+    "api-docs-generator"
   ],
   "description": "Create relative doke just in time",
   "repository": {
@@ -24,8 +27,6 @@
   ],
   "bin": "./dist/index.js",
   "scripts": {
-    "start": "yarn build && node ./dist/index.js",
-    "test": "cross-env FORCE_COLOR=true jest",
     "build": "tsc && ts-node ./add-shabang.ts"
   },
   "dependencies": {
